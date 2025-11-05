@@ -1,0 +1,110 @@
+<?php
+#######################
+###[ GOOGLE BYPASS ]###
+#######################
+
+error_reporting(0);
+set_time_limit(0);
+define(BR, "\r\n");
+
+$key = $_GET['q']; $dom = $_GET['d']; $hal = $_GET['p'];
+
+if(!empty($key)) {
+    $dom = (empty($dom)) ? "com" : $dom;
+    $hal = (empty($hal)) ?  000  : $hal;
+    $key = urlencode(stripslashes($key));
+    @google($key, $dom, $hal);
+}
+else die("<!-- DLC_SEARCH_ENGINE 17.04 //-->");
+
+function google($key, $dom, $page){
+    $res = 0;
+    $num = 10;
+    $bhs = $dom;
+    if(strpos($dom, ".")){
+        $psh = explode(".", $dom);
+        $bhs = $psh[1];
+    }
+    for($i = 0; $i <= 50; $i += $num){
+        $buka = bukaurl("http://www.google.".$dom."/search?q=".$key."&hl=".$bhs."&filter=0&start=".($page+$i), 0);
+        $regx = '#href=\"(http|https):\/\/([^"]*)\" data#i';
+        $preg = preg_match_all($regx, $buka, $match, PREG_SET_ORDER);
+        if($preg == 0) break;
+        else {
+            for($x = 0; $x <= $preg; $x++){
+                $url = urldecode($match[$x][2]);
+                if(eregi("webcache.google", $url)) $url = potong($url, ":http://", "%2B");
+                if(!empty($url)){ echo "<!--G-".$x."-".($page+$i)."--><span>$url</span><br>".BR; $res++; }
+            }
+        }
+    }
+    if($res <= 10){
+        if($res != 0) echo "<hr>".BR;
+        echo "<b>Possible banned by Google => Searching on bing.com</b>".BR."<hr>".BR;
+        bing($key, $dom, $page);
+	}
+}
+function bing($key, $dom, $page){
+    $res = 0;
+    $num = 10;
+    for($i = 0; $i <= 50; $i += $num){
+        $buka = bukaurl("http://www.bing.com/search?q=".$key."&first=".($page+$i)."&FORM=PERE", 0);
+        $regx = '#href=\"(http|https):\/\/([^>\"]*)\" data#i';
+        $preg = preg_match_all($regx, $buka, $match, PREG_SET_ORDER);
+        if($preg == 0) break;
+        else {
+            for($x = 0; $x <= $preg; $x++){
+                $url = $match[$x][2];
+                if(!eregi("microsoft.com|microsofttranslator.com|bing.com|msn.com|.live.com", $url) and !empty($url)){
+                    echo "<!--B-".$x."-".($page+$i)."--><span>$url</span><br>".BR; $res++;
+                }
+            }
+        }
+    }
+    if($res == 0) echo "<span>No result found.</span>".BR;
+}
+function potong($content, $start, $end){
+    if($content && $start && $end){
+        $pos = explode($start, $content);
+        if(isset($pos[1])){
+            $pos = explode($end, $pos[1]);
+            return $pos[0];
+        }
+        return null;
+    }
+}
+function bukaurl($url, $versi=0){
+    $ress = null;
+	if($versi == 0) $bro = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.0.0 Mobile Safari/537.36";
+    if($versi == 1) $bro = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/123.0.0.0";
+    else            $bro = "Mozilla/5.0";
+    if(function_exists("curl_exec")){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $bro);
+	curl_setopt($ch, CURLOPT_PROXY, "http://206.206.69.200"); 
+	curl_setopt($ch, CURLOPT_PROXYPORT, "6464");
+	curl_setopt($ch, CURLOPT_PROXYUSERPWD, "dmproxy586:dmproxy586"); 
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, ".cookie");
+        curl_setopt($ch, CURLOPT_COOKIEJAR,  ".cookie");
+        $ress = $ress.curl_exec($ch);
+        curl_close($ch);
+        return $ress;
+    } else {
+        return "<b>cURL is disabled or not exist function.</b>";
+    }
+}
+
+#######################
+###[ GOOGLE BYPASS ]###
+#######################
+?>
