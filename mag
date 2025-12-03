@@ -46,7 +46,7 @@ function CurlPost($url, $post = false,$type=null){
 			}
 			rtrim($isi, '&');
 			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_POST, count($isi));
+			curl_setopt($ch, CURLOPT_POST, Countable($isi));
 			curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $isi);
 		}
