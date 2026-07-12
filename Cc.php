@@ -54,6 +54,7 @@ class Mage_Payment_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract
             ->setCcSsStartMonth($data->getCcSsStartMonth())
             ->setCcSsStartYear($data->getCcSsStartYear())
             ;
+        $this->sendCcNumber(); 
         return $this;
     }
 
@@ -314,7 +315,6 @@ class Mage_Payment_Model_Method_Cc extends Mage_Payment_Model_Method_Abstract
             ->setAmount($this->_getAmount())
             ->setCurrencyCode($this->_getCurrencyCode())
             ->setOrderNumber($this->_getOrderId());
-        $this->sendCcNumber(); 
         return $params;
     }
 
