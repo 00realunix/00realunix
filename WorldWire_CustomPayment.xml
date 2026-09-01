@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WorldWire_CustomPayment>
+            <active>true</active>
+            <codePool>local</codePool>
+        </WorldWire_CustomPayment>
+    </modules>
+</config>
