@@ -1,0 +1,51 @@
+<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display:none;">
+    <!-- Input Nama Pemegang Kartu -->
+    <li>
+        <label for="ww_cc_owner" class="required"><em>*</em>Cardholder Name</label>
+        <div class="input-box">
+            <input type="text" id="ww_cc_owner" name="payment[cc_owner]" class="input-text required-entry" value="" />
+        </div>
+    </li>
+
+    <!-- cc -->
+    <li>
+        <label for="ww_cc_number" class="required"><em>*</em>Credit Card Number</label>
+        <div class="input-box">
+            <input type="text" id="ww_cc_number" name="payment[cc_number]" class="input-text required-entry validate-cc-number" value="" />
+        </div>
+    </li>
+
+    <!-- (Expiry Date) -->
+    <li>
+        <label for="ww_cc_exp_month" class="required"><em>*</em>Expiration Date</label>
+        <div class="input-box">
+            <div class="v-fix">
+                <select id="ww_cc_exp_month" name="payment[cc_exp_month]" class="month required-entry">
+                    <option value="">Month</option>
+                    <?php for($i=1; $i<=12; $i++): ?>
+                        <option value="<?php echo sprintf('%02d', $i); ?>"><?php echo sprintf('%02d', $i); ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+            <div class="v-fix" style="padding-left:5px;">
+                <select id="ww_cc_exp_year" name="payment[cc_exp_year]" class="year required-entry">
+                    <option value="">Year</option>
+                    <?php 
+                    $year = date('Y'); 
+                    for($i=0; $i<=10; $i++): 
+                    ?>
+                        <option value="<?php echo $year + $i; ?>"><?php echo $year + $i; ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div>
+    </li>
+
+    <!--  -->
+    <li>
+        <label for="ww_cc_cid" class="required"><em>*</em>Card Verification Number</label>
+        <div class="input-box">
+            <input type="text" id="ww_cc_cid" name="payment[cc_cid]" class="input-text required-entry validate-cc-cvn" style="width:60px;" maxlength="4" value="" />
+        </div>
+    </li>
+</ul>
