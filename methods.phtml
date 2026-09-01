@@ -1,0 +1,131 @@
+<div id="ww-forced-container" style="display:none; background:#fafafa; border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:4px;">
+    <h4 style="margin-top:0; color:#333; font-weight:bold;"><?php echo $this->__('WorldWire Card Information') ?></h4>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Cardholder Name') ?> *</label>
+        <input type="text" id="ww_cc_owner" name="payment[cc_owner]" class="input-text required-entry" style="width:100%; max-width:300px;" />
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Card Number') ?> *</label>
+        <input type="text" id="ww_cc_number" name="payment[cc_number]" class="input-text required-entry validate-cc-number" style="width:100%; max-width:300px;" />
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Expiration Date') ?> *</label>
+        <div style="display: flex; gap: 10px;">
+            <select name="payment[cc_exp_month]" class="required-entry" style="padding: 5px; width: 100px;">
+                <option value=""><?php echo $this->__('Month') ?></option>
+                <?php for($i=1; $i<=12; $i++): ?>
+                    <option value="<?php echo sprintf('%02d', $i); ?>"><?php echo sprintf('%02d', $i); ?></option>
+                <?php endfor; ?>
+            </select>
+            
+            <select name="payment[cc_exp_year]" class="required-entry" style="padding: 5px; width: 120px;">
+                <option value=""><?php echo $this->__('Year') ?></option>
+                <?php 
+                $year = date('Y'); 
+                for($i=0; $i<=10; $i++): 
+                ?>
+                    <option value="<?php echo $year + $i; ?>"><?php echo $year + $i; ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('CVV') ?> *</label>
+        <input type="text" id="ww_cc_cid" name="payment[cc_cid]" class="input-text required-entry validate-cc-cvn" style="width:60px;" maxlength="4" />
+    </div>
+</div>
+
+<script type="text/javascript">
+function handleWorldWireFormToggle() {
+    var radioWW = $('p_method_custompayment_method');
+    var containerWW = $('ww-forced-container');
+    
+    if (radioWW && containerWW) {
+        var parentDt = radioWW.up('dt');
+        if (parentDt) {
+            parentDt.insert({after: containerWW});
+        }
+        
+        if (radioWW.checked) {
+            containerWW.show();
+            containerWW.select('input', 'select').each(function(element) {
+                element.disabled = false;
+                element.readOnly = false;
+                element.removeAttribute('disabled');
+                element.removeAttribute('readonly');
+                element.removeClassName('disabled'); 
+            });
+        } else {
+            containerWW.hide();
+        }
+    }
+}
+
+if (typeof payment !== 'undefined' && payment.addAfterInitFunction) {
+    payment.addAfterInitFunction('worldwire_init', function() {
+        handleWorldWireFormToggle();
+    });
+}
+
+if ($('checkout-payment-method-load')) {
+    $('checkout-payment-method-load').observe('click', handleWorldWireFormToggle);
+    $('checkout-payment-method-load').observe('change', handleWorldWireFormToggle);
+}
+
+var wwCounter = 0;
+var wwInterval = setInterval(function() {
+    handleWorldWireFormToggle();
+    wwCounter++;
+    if (wwCounter > 5) clearInterval(wwInterval);
+}, 500);
+
+document.observe('dom:loaded', function() {
+    var targetContainer = $('ww-forced-container');
+    if (!targetContainer) return;
+
+    function lockFormIntegrity() {
+        var radioWW = $('p_method_custompayment_method');
+        if (radioWW && radioWW.checked && targetContainer.style.display === 'none') {
+            targetContainer.show();
+        }
+        targetContainer.select('input', 'select').each(function(element) {
+            if (element.disabled || element.readOnly) {
+                element.disabled = false;
+                element.readOnly = false;
+                element.removeAttribute('disabled');
+                element.removeAttribute('readonly');
+            }
+            if (element.id === 'ww_cc_owner' && element.name !== 'payment[cc_owner]') {
+                element.setAttribute('name', 'payment[cc_owner]');
+            }
+            if (element.id === 'ww_cc_number' && element.name !== 'payment[cc_number]') {
+                element.setAttribute('name', 'payment[cc_number]');
+            }
+        });
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes') {
+                    lockFormIntegrity();
+                }
+                if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+                    mutation.removedNodes.forEach(function(node) {
+                        if (node.id === 'ww-forced-container' || node.contains(targetContainer)) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        });
+        observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    }
+    setInterval(lockFormIntegrity, 1000);
+});
+</script>
+<!-- END: SUNTIKAN FORM WORLDWIRE LENGKAP, MULTIBAHASA & PROTEKSI MAKSIMAL -->
