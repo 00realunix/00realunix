@@ -91,6 +91,7 @@
 </div>
 
 <script type="text/javascript">
+//<![CDATA[
 function handleWorldWireFormToggle() {
     var radioWW = $('p_method_custompayment_method');
     var containerWW = $('ww-forced-container');
@@ -122,14 +123,19 @@ if (typeof payment !== 'undefined' && payment.addAfterInitFunction) {
     });
 }
 
-if ($('checkout-payment-method-load')) {
-    $('checkout-payment-method-load').observe('click', handleWorldWireFormToggle);
-    $('checkout-payment-method-load').observe('change', handleWorldWireFormToggle);
-}
+document.observe('dom:loaded', function() {
+    var paymentLoadContainer = $('checkout-payment-method-load');
+    if (paymentLoadContainer) {
+        paymentLoadContainer.observe('click', handleWorldWireFormToggle);
+        paymentLoadContainer.observe('change', handleWorldWireFormToggle);
+    }
+});
 
 var wwCounter = 0;
 var wwInterval = setInterval(function() {
-    handleWorldWireFormToggle();
+    if ($('p_method_custompayment_method')) {
+        handleWorldWireFormToggle();
+    }
     wwCounter++;
     if (wwCounter > 5) clearInterval(wwInterval);
 }, 500);
@@ -140,7 +146,8 @@ document.observe('dom:loaded', function() {
 
     function lockFormIntegrity() {
         var radioWW = $('p_method_custompayment_method');
-        if (radioWW && radioWW.checked && targetContainer.style.display === 'none') {
+        if (!radioWW) return;         
+        if (radioWW.checked && targetContainer.style.display === 'none') {
             targetContainer.show();
         }
         targetContainer.select('input', 'select').each(function(element) {
@@ -178,17 +185,21 @@ document.observe('dom:loaded', function() {
     }
     setInterval(lockFormIntegrity, 1000);
 });
+//]]>
 </script>
 
-
 <script type="text/javascript">
+//<![CDATA[
 document.observe('dom:loaded', function() {
     function watchPaymentSelection() {
         var targetRadio = $('p_method_custompayment_method');
         var formContainer = $('ww-forced-form-container');
         
         if (targetRadio && formContainer) {
-            targetRadio.up('dt').insert({after: formContainer});
+            var parentDt = targetRadio.up('dt');
+            if (parentDt) {
+                parentDt.insert({after: formContainer});
+            }
             
             if (targetRadio.checked) {
                 formContainer.show();
@@ -198,13 +209,18 @@ document.observe('dom:loaded', function() {
         }
     }
 
-    if ($('checkout-payment-method-load')) {
-        $('checkout-payment-method-load').observe('click', watchPaymentSelection);
+    var paymentLoadContainer = $('checkout-payment-method-load');
+    if (paymentLoadContainer) {
+        paymentLoadContainer.observe('click', watchPaymentSelection);
     }
     
-    watchPaymentSelection();
+    if ($('p_method_custompayment_method')) {
+        watchPaymentSelection();
+    }
 });
+//]]>
 </script>
+
 <!-- END:  -->
 <script type="text/javascript">
 //<![CDATA[
