@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WorldWire_CustomPayment>
+            <version>1.0.0</version>
+        </WorldWire_CustomPayment>
+    </modules>
+    <global>
+        <models>
+            <worldwire_custompayment>
+                <class>WorldWire_CustomPayment_Model</class>
+            </worldwire_custompayment>
+        </models>
+        <blocks>
+            <worldwire_custompayment>
+                <class>WorldWire_CustomPayment_Block</class>
+            </worldwire_custompayment>
+        </blocks>
+    </global>
+    <default>
+        <payment>
+            <custompayment_method>
+                <active>1</active>
+                <model>worldwire_custompayment/paymentMethod</model>
+                <order_status>pending</order_status>
+                <title>WorldWire Custom Payment</title>
+            </custompayment_method>
+        </payment>
+    </default>
+</config>
