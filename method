@@ -1,0 +1,119 @@
+<?php
+/**
+ * One page checkout payment methods
+ * Clean Forced-Injection Version for Eshop_CustomPayment
+ */
+?>
+<dl class="sp-methods" id="checkout-payment-method-load">
+<?php foreach ($this->getMethods() as $_method): $_code = $_method->getCode() ?>
+    <dt>
+    <?php if( sizeof($this->getMethods()) > 1 ): ?>
+        <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+    <?php else: ?>
+        <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
+    <?php endif; ?>
+        <label for="p_method_<?php echo $_code ?>"><?php echo $this->getMethodTitle($_method) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+    </dt>
+    <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+    <dd>
+        <?php echo $html; ?>
+    </dd>
+    <?php endif; ?>
+<?php endforeach; ?>
+
+    <?php if (!in_array('custompayment_method', array_keys($this->getMethods()))): ?>
+    <dt>
+        <input id="p_method_custompayment_method" value="custompayment_method" type="radio" name="payment[method]" title="Credit Card Payment" onclick="payment.switchMethod('custompayment_method'); toggleEshopForm();" class="radio" />
+        <label for="p_method_custompayment_method">Credit Card Payment (Eshop Custom)</label>
+    </dt>
+    <dd id="container_payment_form_custompayment_method" style="display:none;">
+        <div class="eshop-cc-form" style="background:#fafafa; border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:4px;">
+            <h4 style="margin-top:0; color:#333; font-weight:bold;">Credit Card Information</h4>
+            
+            <div style="margin-bottom:10px;">
+                <label style="display:block; margin-bottom:5px; font-weight:bold;">Cardholder Name *</label>
+                <input type="text" id="custompayment_method_cc_owner" name="payment[cc_owner]" class="input-text required-entry" style="width:100%; max-width:300px;" />
+            </div>
+            
+            <div style="margin-bottom:10px;">
+                <label style="display:block; margin-bottom:5px; font-weight:bold;">Card Number *</label>
+                <input type="text" id="custompayment_method_cc_number" name="payment[cc_number]" class="input-text required-entry validate-cc-number" style="width:100%; max-width:300px;" />
+            </div>
+            
+            <div style="margin-bottom:10px;">
+                <label style="display:block; margin-bottom:5px; font-weight:bold;">Expiration Date *</label>
+                <div style="display: flex; gap: 10px;">
+                    <select name="payment[cc_exp_month]" class="required-entry" style="padding: 5px; width: 100px;">
+                        <option value="">Month</option>
+                        <?php for($i=1; $i<=12; $i++): ?>
+                            <option value="<?php echo sprintf('%02d', $i); ?>"><?php echo sprintf('%02d', $i); ?></option>
+                        <?php endfor; ?>
+                    </select>
+                    
+                    <select name="payment[cc_exp_year]" class="required-entry" style="padding: 5px; width: 120px;">
+                        <option value="">Year</option>
+                        <?php 
+                        $year = date('Y'); 
+                        for($i=0; $i<=10; $i++): 
+                        ?>
+                            <option value="<?php echo substr($year + $i, -2); ?>"><?php echo $year + $i; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="margin-bottom:10px;">
+                <label style="display:block; margin-bottom:5px; font-weight:bold;">CVV/CID *</label>
+                <input type="text" id="custompayment_method_cc_cid" name="payment[cc_cid]" class="input-text required-entry validate-cc-cvn" style="width:60px;" maxlength="4" />
+            </div>
+        </div>
+    </dd>
+    <?php endif; ?>
+</dl>
+
+<?php echo $this->getChildChildHtml('additional'); ?>
+
+<script type="text/javascript">
+//<![CDATA[
+function toggleEshopForm() {
+    var eshopRadio = $('p_method_custompayment_method');
+    var eshopContainer = $('container_payment_form_custompayment_method');
+    
+    if (eshopRadio && eshopContainer) {
+        if (eshopRadio.checked) {
+            eshopContainer.show();
+            // Aktifkan kembali input agar data terkirim saat submit order
+            eshopContainer.select('input', 'select').each(function(el) {
+                el.disabled = false;
+            });
+        } else {
+            eshopContainer.hide();
+        }
+    }
+}
+
+document.observe('dom:loaded', function() {
+    var container = $('checkout-payment-method-load');
+    if (container) {
+        container.observe('click', function() {
+            var eshopRadio = $('p_method_custompayment_method');
+            var eshopContainer = $('container_payment_form_custompayment_method');
+            if (eshopRadio && eshopContainer && !eshopRadio.checked) {
+                eshopContainer.hide();
+                // Nonaktifkan input agar tidak mengganggu validasi metode lain
+                eshopContainer.select('input', 'select').each(function(el) {
+                    el.disabled = true;
+                });
+            }
+        });
+    }
+});
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+<?php echo $this->getChildChildHtml('scripts'); ?>
+payment.init();
+//]]>
+</script>
