@@ -17,6 +17,15 @@
             </worldwire_custompayment>
         </blocks>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <worldwire_custompayment>
+                    <file>worldwire_custompayment.xml</file>
+                </worldwire_custompayment>
+            </updates>
+        </layout>
+    </frontend>
     <default>
         <payment>
             <custompayment_method>
