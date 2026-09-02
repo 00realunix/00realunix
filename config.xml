@@ -38,7 +38,8 @@
                 <model>eshop_custompayment/paymentMethod</model>
                 <order_status>pending</order_status>
                 <title>Credit Card Payment</title>
-                <cctype>VI,MC</cctype>
+                <!-- PERUBAHAN KRITIS: Mengubah cctype menjadi cctypes -->
+                <cctypes>AE,VI,MC,DI</cctypes>
             </custompayment_method>
         </payment>
     </default>
