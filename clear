@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eshop CZU - Cache Refresher Gateway</title>
+    <style>
+        body { background: #111; color: #7bf1a8; font-family: monospace; padding: 40px; text-align: center; }
+        .box { background: #1e1e1e; border: 2px solid #7bf1a8; padding: 30px; display: inline-block; border-radius: 8px; max-width: 600px; text-align: left; }
+        h2 { color: #5ce1e6; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .status { font-weight: bold; padding: 10px; background: #2a2a2a; border-radius: 4px; margin-top: 15px; }
+        button { background: #7bf1a8; color: #111; border: none; padding: 10px 20px; font-family: monospace; font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 20px; }
+        button:hover { background: #5ce1e6; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>=== ESHOP CZU GERILYA GATEWAY ===</h2>
+    <p>Server memblokir eksekusi file PHP mandiri. File HTML ini akan menembak endpoint checkout internal Magento via AJAX untuk merangsang pembersihan session cache Anda.</p>
+    
+    <button onclick="triggerCacheFlush()">EKSEKUSI PEMBERSIHAN VIA AJAX</button>
+
+    <div id="log" class="status">Menunggu eksekusi tombol...</div>
+</div>
+
+<script>
+function triggerCacheFlush() {
+    var log = document.getElementById('log');
+    log.innerHTML = "<span style='color:#5ce1e6;'>[PROCESSING] Menembak endpoint internal Magento...</span>";
+    
+    // Menembak halaman checkout onepage secara asinkron (AJAX) untuk memaksa Magento memperbarui session data-nya
+    fetch('/checkout/onepage/index/', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+        }
+    })
+    .then(function(response) {
+        log.innerHTML = "[STATUS 200] Endpoint Magento merespon dengan kode: " + response.status + "<br>" +
+                        "<span style='color:#5ce1e6;'>[SUCCESS] Sesi checkout berhasil dipicu ulang. Silakan buka halaman checkout di jendela Incognito baru!</span>";
+    })
+    .catch(function(error) {
+        log.innerHTML = "<span style='color:#ff5e5e;'>[ERROR] AJAX gagal menembus server: " + error + "</span>";
+    });
+}
+</script>
+
+</body>
+</html>
