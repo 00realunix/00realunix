@@ -22,6 +22,15 @@
             </eshop_custompayment>
         </helpers>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <eshop_custompayment>
+                    <file>eshop_custompayment.xml</file>
+                </eshop_custompayment>
+            </updates>
+        </layout>
+    </frontend>
     <default>
         <payment>
             <custompayment_method>
