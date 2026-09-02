@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<config>
+<layout version="0.1.0">
     <checkout_onepage_index>
-        <reference name="head">
-            <action method="addJs"><script>varien/payment.js</script></action>
+        <reference name="before_body_end">
+            <block type="eshop_custompayment/form" name="payment.form.custompayment_method" template="custompayment/cc.phtml" />
         </reference>
     </checkout_onepage_index>
-</config>
+</layout>
