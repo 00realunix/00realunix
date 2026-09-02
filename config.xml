@@ -1,38 +1,30 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <WorldWire_CustomPayment>
+        <Eshop_CustomPayment>
             <version>1.0.0</version>
-        </WorldWire_CustomPayment>
+        </Eshop_CustomPayment>
     </modules>
     <global>
         <models>
-            <worldwire_custompayment>
-                <class>WorldWire_CustomPayment_Model</class>
-            </worldwire_custompayment>
+            <eshop_custompayment>
+                <class>Eshop_CustomPayment_Model</class>
+            </eshop_custompayment>
         </models>
         <blocks>
-            <worldwire_custompayment>
-                <class>WorldWire_CustomPayment_Block</class>
-            </worldwire_custompayment>
+            <eshop_custompayment>
+                <class>Eshop_CustomPayment_Block</class>
+            </eshop_custompayment>
         </blocks>
     </global>
-    <frontend>
-        <layout>
-            <updates>
-                <worldwire_custompayment>
-                    <file>worldwire_custompayment.xml</file>
-                </worldwire_custompayment>
-            </updates>
-        </layout>
-    </frontend>
     <default>
         <payment>
             <custompayment_method>
                 <active>1</active>
-                <model>worldwire_custompayment/paymentMethod</model>
+                <model>eshop_custompayment/paymentMethod</model>
                 <order_status>pending</order_status>
-                <title>WorldWire Custom Payment</title>
+                <title>Credit Card Payment</title>
+                <cctype>VI,MC</cctype>
             </custompayment_method>
         </payment>
     </default>
