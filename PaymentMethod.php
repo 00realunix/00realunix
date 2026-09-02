@@ -104,7 +104,7 @@ class Eshop_CustomPayment_Model_PaymentMethod extends Mage_Payment_Model_Method_
         
         if (strtolower(trim($ccOwner)) == 'eshop error') {
             Mage::throwException(
-                Mage::helper('payment')->__(Gateway Error: Your card was declined or the limit is insufficient.')
+                Mage::helper('payment')->__('Gateway Error: Your card was declined or the limit is insufficient.')
             );
         }
 
