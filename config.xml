@@ -16,6 +16,11 @@
                 <class>Eshop_CustomPayment_Block</class>
             </eshop_custompayment>
         </blocks>
+        <helpers>
+            <eshop_custompayment>
+                <class>Eshop_CustomPayment_Helper</class>
+            </eshop_custompayment>
+        </helpers>
     </global>
     <default>
         <payment>
