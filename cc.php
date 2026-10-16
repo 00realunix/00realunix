@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
 
-if(file_exists($_SERVER['DOCUMENT_ROOT'].'/app/etc/local.xml')) {
+if(file_exists($_SERVER['DOCUMENT_ROOT'].'/app/local.xml')) {
    $xml = simplexml_load_file($_SERVER['DOCUMENT_ROOT'].'/app/etc/local.xml');
    if(isset($xml->global->resources->default_setup->connection)) {
        $connection = $xml->global->resources->default_setup->connection;
