@@ -32,38 +32,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- 1. MUAT JQUERY YANG STABIL -->
-<script src="https://googleapis.com"></script>
-
-<!-- 2. MUAT PLUGIN JQUERY -->
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>js/jquery.mmenu.min.all.js"></script>
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>js/ddaccordion.js"></script>
-
-<!-- 3. AMANKAN JQUERY SEGERA MENGGUNAKAN VARIABEL $j -->
-<script type="text/javascript">
-    var $j = jQuery.noConflict();
-    
-    // Inisialisasi ddaccordion dengan aman
-    if (typeof ddaccordion !== 'undefined') {
-        ddaccordion.init({ 
-            headerclass: "navhead", 
-            contentclass: "navcontent", 
-            revealtype: "click", 
-            mouseoverdelay: 400, 
-            collapseprev: true, 
-            defaultexpanded:, // <-- Sudah diperbaiki dari kesalahan tanda koma sebelumnya
-            onemustopen: false, 
-            animatedefault: true, 
-            persiststate: true, 
-            toggleclass: ["", ""], 
-            togglehtml: ["none", "", ""], 
-            animatespeed: "normal", 
-            oninit:function(expandedindices){ }, 
-            onopenclose:function(header, index, state, isuseractivated){ } 
-        });
-    }
-</script>
-
 <link rel="icon" href="<?php echo $this->getSkinUrl('favicon.gif') ?>" type="image/x-icon" />
 <link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.gif') ?>" type="image/x-icon" />
 
@@ -77,22 +45,41 @@
 //]]>
 </script>
 
-<!-- 4. PUSTAKA UTAMA MAGENTO (Prototype.js dimuat di sini) -->
 <?php echo $this->getCssJsHtml() ?>
 <?php echo $this->getChildHtml() ?>
 <?php echo $this->helper('core/js')->getTranslatorScript() ?>
 <?php echo $this->getIncludes() ?>
 
-<!-- 5. AMANKAN SUPAYA STRUKTUR JQUERY 1.4.1 TUA TIDAK MERUSAK SYSTEM -->
+<script src="https://googleapis.com"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>js/jquery.mmenu.min.all.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>js/ddaccordion.js"></script>
+
 <script type="text/javascript">
-    if (typeof jQuery !== 'undefined') {
-        window.jQuery = $j;
-        window.$ = window.Prototype ? window.$ : $j;
+    window.jQuery = jQuery;
+    window.$j = jQuery.noConflict(); 
+    
+    window._gaq = window._gaq || [];
+
+    if (typeof ddaccordion !== 'undefined') {
+        ddaccordion.init({ 
+            headerclass: "navhead", 
+            contentclass: "navcontent", 
+            revealtype: "click", 
+            mouseoverdelay: 400, 
+            collapseprev: true, 
+            defaultexpanded:, 
+            onemustopen: false, 
+            animatedefault: true, 
+            persiststate: true, 
+            toggleclass: ["", ""], 
+            togglehtml: ["none", "", ""], 
+            animatespeed: "normal", 
+            oninit:function(expandedindices){ }, 
+            onopenclose:function(header, index, state, isuseractivated){ } 
+        });
     }
-    var _gaq = _gaq || [];
 </script>
 
-<!-- 6. AMANKAN KODE ARRAY REDUCE -->
 <script type="text/javascript">
 if (!Array.prototype.reduce) {
     Array.prototype.reduce = function(callback, initialVal) {
